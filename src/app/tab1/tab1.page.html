@@ -1,0 +1,46 @@
+<div class="toolbar">
+  <ion-header>
+    <ion-toolbar class="toolbar-background">
+      <ion-title class="titulo">
+        KING ANIME TV
+      </ion-title>
+    </ion-toolbar>
+  </ion-header>
+</div>
+
+<ion-content [fullscreen]="true">
+  <div class="album py-3">
+    <div class="container">
+      <!-- Contenedor para el título "Últimos Episodios" -->
+      <div class="heading-container">
+        <h3 class="text-center">Últimos Episodios</h3>
+      </div>
+      <br>
+      <div class="row card-group peliculas" *ngIf="cargarPeliculasPopulares">
+        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let item of animes;">
+          <div class="card anime-card">
+            <a [routerLink]="['/pagina-pelicula', item.id]">
+              <div class="card-img-wrapper">
+                <img class="card-img-top" [src]="item.portada" alt="{{item.titulo}}" (error)="errorHandler($event)">
+                <i class="fas fa-play play-icon"></i>
+              </div>
+            </a>
+            <div class="card-body text-center">
+              <h5 class="card-title">{{item.titulo}}</h5>
+              <p class="card-text text-muted">{{item.episodio}}</p>
+              <div class="card-footer d-flex justify-content-around">
+                <i class="fas fa-heart favorite-icon" title="Añadir a favoritos"></i>
+                <i class="fas fa-share-alt share-icon" title="Compartir"></i>
+                <i class="fas fa-list-alt season-icon" title="Ver temporada completa" [routerLink]="['/anime-perfil', item.id]"></i>
+                <i class="fas fa-cloud-download-alt download-icon" title="Descargar"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!cargarPeliculasPopulares" class="spinner-container">
+        <div class="loader"></div>
+      </div>
+    </div>
+  </div>
+</ion-content>

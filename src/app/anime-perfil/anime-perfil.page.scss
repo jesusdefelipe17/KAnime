@@ -1,0 +1,12 @@
+ion-toolbar {
+    box-shadow: none; /* Quita la sombra del toolbar */
+    border-bottom: none; /* Quita la línea del borde */
+  }
+  .titulo {
+    text-align: center;
+    color: #ffffff; /* Blanco para el texto del título */
+    font-weight: bold;
+    font-family: sans-serif; /* Fuente llamativa y divertida */
+    font-size: 1.6rem; /* Tamaño más grande para el título */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para mejorar la visibilidad */
+  }

@@ -1,0 +1,142 @@
+ion-back-button {
+    display: block;
+    color: White;
+ }
+.fondo{
+    background-color: black;
+    
+ }
+ .new-background-color{
+   --background: #000000;
+ 
+}
+ion-title{
+   text-align: center;
+   margin-right: 10%;
+}
+ ion-icon {
+   color: White;
+   background-color: Black;
+   font-size: 30px; 
+ }
+ p{
+   color: white;
+ }
+ .card-title,h2,h3{
+   color: white;
+ }
+ .titulo{
+   text-align: center;
+
+}
+ 
+.back{
+   position: absolute;
+   width: 100%;
+   height: 30%;
+   object-fit:cover;
+   background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(31.5, 31.5, 52.5, 1)), color-stop(100%, rgba(31.5, 31.5, 52.5, 1)));
+   z-index: 1;
+   opacity: 0.7;
+   image-rendering: auto;
+}
+#imagenBack{
+   width: 100%;
+   height: 100%;
+}
+
+#serieImgError{
+   height: 72%;
+}
+
+@media only screen and  (max-width:424px) and (min-width: 375px)  { //Pantallas medianas
+   .back{
+      position: absolute;
+      width: 100%;
+      height: 26.5%;
+      object-fit:cover;
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(31.5, 31.5, 52.5, 1)), color-stop(100%, rgba(31.5, 31.5, 52.5, 1)));
+      z-index: 1;
+      opacity: 0.7;
+      image-rendering: auto;
+   }
+ }
+
+ @media only screen and  (max-width:374px) and (min-width: 319px)  { //Pantallas pequeñas
+   .back{
+      position: absolute;
+      width: 100%;
+      height: 22.5%;
+      object-fit:cover;
+      background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(31.5, 31.5, 52.5, 1)), color-stop(100%, rgba(31.5, 31.5, 52.5, 1)));
+      z-index: 1;
+      opacity: 0.7;
+      image-rendering: auto;
+   }
+   
+ }
+
+ .card-body {
+   text-align: center; /* Centra el contenido de texto y los botones dentro de card-body */
+ }
+ 
+ .btn-group {
+   margin-top: 10px; /* Añade un margen superior para separar los botones del contenido anterior */
+ }
+ 
+ .language-btn {
+   background-color: #007bff; /* Color de fondo de los botones */
+   color: white; /* Color del texto de los botones */
+   border: none; /* Quita el borde de los botones */
+   border-radius: 5px; /* Redondea las esquinas de los botones */
+   padding: 10px 20px; /* Añade relleno para hacer los botones más grandes */
+   margin: 0 5px; /* Añade espacio horizontal entre los botones */
+   cursor: pointer; /* Cambia el cursor al pasar sobre el botón */
+   transition: background-color 0.3s ease; /* Transición suave para el cambio de color de fondo */
+ }
+ 
+ .language-btn:hover {
+   background-color: #0056b3; /* Color de fondo de los botones al pasar el mouse */
+ }
+ 
+ .language-btn:focus {
+   outline: none; /* Quita el borde del enfoque para que se vea más limpio */
+ }
+
+ .spinner-container {
+   position: fixed; /* Fija el contenedor en la pantalla */
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+   background-color: rgb(0, 0, 0); /* Fondo negro con opacidad para el contenedor de carga */
+   display: flex; /* Usa flexbox para centrar el contenido */
+   justify-content: center; /* Centra horizontalmente */
+   align-items: center; /* Centra verticalmente */
+   z-index: 9999; /* Asegúrate de que esté sobre otros elementos */
+   opacity: 1;
+   transition: opacity 0.5s ease-out; /* Transición para ocultar el spinner */
+ }
+ 
+ .loader {
+   width: 50px;
+   height: 50px; /* Ajusta el alto del spinner para que sea un círculo perfecto */
+   padding: 8px;
+   aspect-ratio: 1;
+   border-radius: 50%;
+   background: #25b09b;
+   --_m: 
+     conic-gradient(#0000 10%, #000),
+     linear-gradient(#000 0 0) content-box;
+   -webkit-mask: var(--_m);
+           mask: var(--_m);
+   -webkit-mask-composite: source-out;
+           mask-composite: subtract;
+   animation: l3 1s infinite linear;
+ }
+ 
+ @keyframes l3 {
+   to { transform: rotate(1turn); }
+ }
+
+ 
