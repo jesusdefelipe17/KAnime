@@ -3,5 +3,8 @@ export interface AnimeResponse {
     episodio: string;
     titulo: string;
     portada: string;
-    id:string
+    id:string,
+    calificacion:string,
+    descripcion:string,
+    tipo:string
 }

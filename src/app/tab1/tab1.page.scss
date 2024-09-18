@@ -1,151 +1,412 @@
 /* Estilo para el título */
 .titulo {
-    text-align: center;
-    color: #ffffff; /* Blanco para el texto del título */
-    font-weight: bold;
-    font-family: sans-serif; /* Fuente llamativa y divertida */
-    font-size: 1.6rem; /* Tamaño más grande para el título */
-    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para mejorar la visibilidad */
-  }
-  
-  /* Estilo para el encabezado de los episodios */
-  h3 {
-    color: #45a049; /* Amarillo brillante para resaltar el encabezado */
-    text-align: center;
-    font-family: sans-serif; /* Fuente limpia y moderna */
-    font-size: 1.5rem; /* Tamaño grande para el encabezado */
-    margin-top: 1rem;
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra ligera para mejorar la visibilidad */
-  }
-  
-  /* Estilo para el fondo del contenido */
-  .album {
-    background-color: #212121; /* Fondo gris oscuro para el contenido */
-    padding-top: 1.5rem;
-    padding-bottom: 1.5rem;
-  }
-  
-  /* Estilo para el encabezado */
-  .toolbar-background {
-    --background: #282828; /* Gris muy oscuro para el fondo del toolbar */
-  }
-  
-  /* Eliminar la línea inferior del toolbar */
-  ion-toolbar {
-    box-shadow: none; /* Quita la sombra del toolbar */
-    border-bottom: none; /* Quita la línea del borde */
-  }
-  
-  /* Estilo para las tarjetas de anime */
-  .anime-card {
-    border-radius: 10px;
-    overflow: hidden;
-    background-color: #333333; /* Fondo gris oscuro para las tarjetas */
-    color: #f5f5f5; /* Gris claro para el texto */
-    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-  }
-  
-  .anime-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.4);
-  }
-  
-  .anime-card .card-img-wrapper {
-    position: relative;
-  }
-  
-  .anime-card .card-img-top {
-    height: 200px;
-    object-fit: cover;
-    border-bottom: 5px solid #4caf50; /* Línea verde en la parte inferior de la imagen */
-  }
-  
-  .anime-card .play-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    color: #ffffff;
-    opacity: 0.8;
-    transition: opacity 0.3s ease;
-  }
-  
-  .anime-card:hover .play-icon {
-    opacity: 1;
-  }
-  
-  .anime-card .card-body {
-    padding: 1rem;
-    background-color: #2c2c2c; /* Fondo gris oscuro para el cuerpo de la tarjeta */
-  }
-  
-  .anime-card .card-title {
-    font-size: 1.3rem;
-    margin-bottom: 0.5rem;
-    color: #ffffff; /* Blanco para el título de la tarjeta */
-    font-family: sans-serif; /* Fuente limpia para el título */
-  }
-  
-  .anime-card .card-text {
-    font-size: 1rem;
-    color: #b0b0b0; /* Gris claro para el texto de la tarjeta */
-  }
-  
-  .anime-card .card-footer {
-    padding: 0.5rem;
-    background-color: #2c2c2c; /* Fondo gris oscuro para el pie de la tarjeta */
-    border: none; /* Eliminar borde */
-    
-  }
-  
-  .anime-card .btn-primary {
-    background-color: #4caf50; /* Verde para el botón */
-    border: none;
-  }
-  
-  .anime-card .btn-primary:hover {
-    background-color: #45a049; /* Verde más oscuro para el hover del botón */
-  }
-  
-  /* Estilo para el spinner */
-  .loader {
-    width: 50px;
-    padding: 8px;
-    aspect-ratio: 1;
-    border-radius: 50%;
-    background: #2196f3; /* Azul para el spinner */
-    --_m: 
-      conic-gradient(#0000 10%,#000),
-      linear-gradient(#000 0 0) content-box;
-    -webkit-mask: var(--_m);
-            mask: var(--_m);
-    -webkit-mask-composite: source-out;
-            mask-composite: subtract;
-    animation: l3 1s infinite linear;
-  }
-  
-  @keyframes l3 {
-    to { transform: rotate(1turn); }
-  }
-  
-  /* Estilo para el contenedor del spinner */
-  .spinner-container {
-    display: flex; /* Usa flexbox para centrar el contenido */
-    justify-content: center; /* Centra horizontalmente */
-    align-items: center; /* Centra verticalmente */
-    opacity: 1;
-    transition: opacity 0.5s ease-out; /* Transición para ocultar el spinner */
-  }
-  
-  .heading-container {
-    text-align: center; /* Centra el texto horizontalmente */
-  }
-  
-  .heading-container h3 {
-    color: #45a049; /* El color del texto para el encabezado */
-    font-family: sans-serif; /* Fuente para el encabezado */
-    font-size: 1.5rem; /* Tamaño del texto del encabezado */
-    text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5); /* Sombra para mejorar la visibilidad */
-  }
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.full-screen {
+  min-height: 100%; /* Ocupa al menos el 100% de la altura de la pantalla */
+  display: flex;     /* Esto puede ayudarte a centrar contenido */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center;     /* Centra verticalmente el contenido */
+}
+
+/* Estilo para el encabezado de los episodios */
+h3 {
+  color: #45a049;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid #333333; /* Línea de separación debajo del título */
+  padding-bottom: 0.5rem; /* Espacio entre el texto y la línea */
+}
+
+/* Estilo para el fondo del contenido */
+.album {
+  background-color: #212121;
+
+}
+
+/* Estilo para el encabezado */
+.toolbar-background {
+  --background: #282828;
+}
+
+/* Eliminar la línea inferior del toolbar */
+ion-toolbar {
+  box-shadow: none;
+  border-bottom: none;
+}
+
+/* Estilo para el contenedor de las tarjetas */
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+}
+
+/* Estilo para las tarjetas */
+.anime-card {
+  border-radius: 10px;
+  overflow: hidden;
+  background-color: #333333;
+  color: #f5f5f5;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  width: 250px;
+  height: 350px;
+  display: flex;
+  flex-direction: column;
+}
+
+.anime-card .card-img-wrapper {
+  position: relative;
+  flex: 1;
+}
+
+.anime-card .card-img-top {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 5px solid #4caf50;
+}
+
+.anime-card .play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: #ffffff;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.anime-card:hover .play-icon {
+  opacity: 1;
+}
+
+.anime-card .card-body {
+  padding: 1rem;
+  background-color: #2c2c2c;
+  flex: 0 0 auto;
+}
+
+.anime-card .card-title {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #ffffff;
+  font-family: sans-serif;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.anime-card .card-text {
+  font-size: 1rem;
+  color: #b0b0b0;
+}
+
+.anime-card .card-footer {
+  padding: 0.5rem;
+  background-color: #2c2c2c;
+  border: none;
+}
+
+/* Estilo para los botones */
+.anime-card .btn-primary {
+  background-color: #4caf50;
+  border: none;
+}
+
+.anime-card .btn-primary:hover {
+  background-color: #45a049;
+}
+
+/* Estilo para el spinner */
+.loader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #4caf50;
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  to { transform: rotate(1turn); }
+}
+
+/* Estilo para el contenedor del spinner */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+/* Estilo para el carrusel con ion-slides */
+.carousel-slides {
+  overflow: hidden; /* Asegura que el overflow esté oculto */
+}
+
+ion-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  width: auto; /* Ajusta el ancho de los slides automáticamente */
+}
+
+.anime-card {
+  width: 100%; /* Asegura que la tarjeta ocupe todo el ancho del slide */
+  max-width: 250px; /* Ajusta el ancho máximo según sea necesario */
+  margin: 0 auto; /* Centra la tarjeta dentro del slide */
+}
+
+/* Estilo para el slider de populares */
+.popular-slides {
+  overflow: hidden; /* Asegura que el overflow esté oculto */
+}
+
+.popular-slides .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Estilo para el contenedor del poster */
+/* Estilo para el contenedor del poster */
+.popular-poster {
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  width: 100%;
+  max-width: 200px; /* Ajusta el ancho máximo del poster según sea necesario */
+  position: relative; /* Para asegurar que los hijos sean posicionados relativamente */
+  background: #212121; /* Fondo del contenedor del poster */
+  border-radius: 10px;
+}
+
+/* Estilo para el contenedor de la imagen y la calificación */
+.poster-img-wrapper {
+  position: relative; /* Necesario para el posicionamiento absoluto de la calificación */
+}
+
+/* Estilo para la imagen del poster */
+.poster-img {
+  width: 100%;
+  height: auto;
+  max-height: 250px; /* Ajusta la altura máxima si es necesario */
+  object-fit: cover; /* Asegura que la imagen cubra el contenedor sin deformarse */
+  border-radius: 10px 10px 10px 10px; /* Redondea la parte superior de la imagen */
+}
+
+/* Estilo para el título del poster */
+.poster-title {
+  margin-top: 0.5rem;
+  text-align: left; /* Centra el texto del título */
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+/* Contenedor de la calificación */
+.rating-container {
+  position: absolute; /* Posiciona el contenedor absolutamente dentro del poster */
+  bottom: 10px; /* Ajusta la distancia desde el borde inferior */
+  right: 10px; /* Ajusta la distancia desde el borde derecho */
+  background: rgba(0, 0, 0, 0.6); /* Fondo oscuro con opacidad para mejor legibilidad */
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  z-index: 10; /* Asegura que esté por encima de la imagen del poster */
+}
+
+/* Texto de calificación */
+.rating-text {
+  font-size: 0.8rem;
+  margin-right: 5px;
+}
+
+/* Estrella de calificación */
+.rating-star {
+  color: #ffd700; /* Color dorado para la estrella */
+  font-size: 1rem;
+}
+/* Estilo para el contenedor del anime aleatorio */
+/* Estilo para el contenedor del anime aleatorio */
+.random-anime-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+/* Estilo para la imagen del anime aleatorio */
+.random-anime-img-wrapper {
+  position: relative;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+/* Imagen del anime aleatorio */
+.random-anime-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 5%, #212121 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 5%, #212121 100%);
+}
+
+/* Aviso de "NEW" en la esquina superior izquierda */
+.new-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  background-color: #ff0000; /* Color de fondo rojo para el aviso */
+  color: #ffffff; /* Texto en blanco */
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  z-index: 20; /* Asegura que esté encima de la imagen */
+}
+
+/* Aviso del tipo en la esquina superior derecha */
+.type-badge {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background-color: #cccccc; /* Color de fondo por defecto */
+  color: #ffffff; /* Texto en blanco */
+  padding: 5px 10px;
+  border-radius: 15px; /* Bordes redondeados */
+  font-weight: bold;
+  font-size: 0.9rem;
+  z-index: 20; /* Asegura que esté encima de la imagen */
+}
+
+/* Colores específicos para cada tipo */
+.type-anime {
+  background-color: #3498db; /* Color para Anime */
+}
+
+.type-pelicula {
+  background-color: #e67e22; /* Color para Película */
+}
+
+.type-ova {
+  background-color: #2ecc71; /* Color para OVA */
+}
+
+/* Información del anime (título y calificación) superpuesta en la imagen */
+.random-anime-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: calc(100% - 20px); /* Ajusta el ancho para dar espacio */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  z-index: 10;
+}
+
+/* Contenedor para el título y la calificación */
+.title-rating-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Título del anime alineado a la izquierda */
+.random-anime-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Calificación del anime alineada a la derecha */
+.random-anime-rating {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-left: auto;
+}
+
+/* Icono de estrella */
+.random-anime-rating .fa-star {
+  color: #ffc107;
+  margin-left: 5px;
+}
+
+/* Descripción del anime aleatorio debajo de la imagen */
+.random-anime-description {
+  color: #ffffff;
+  background-color: rgba(33, 33, 33, 0.8);
+  padding: 10px;
+  border-radius: 10px;
+  line-height: 1.4;
+  font-size: 1rem;
+}
+
+
+/* Estilo para el contenedor del botón */
+.watch-button-wrapper {
+  margin-top: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+/* Estilo para el botón */
+.watch-button {
+  width: 100%;
+  background-color: #397C33; /* Color verde */
+  color: #ffffff;
+  border: none;
+  padding: 10px 0;
+  font-size: 1rem;
+  font-weight: bold;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+/* Ícono de play dentro del botón */
+.watch-button .play-icon {
+  margin-right: 10px;
+  font-size: 1.5rem;
+}
+
+/* Hover para el botón */
+.watch-button:hover {
+  background-color: #2d6328; /* Color más oscuro para hover */
+}
+
+

@@ -7,6 +7,24 @@ ion-toolbar {
     color: #ffffff; /* Blanco para el texto del título */
     font-weight: bold;
     font-family: sans-serif; /* Fuente llamativa y divertida */
-    font-size: 1.6rem; /* Tamaño más grande para el título */
+    font-size: 1.5rem; /* Tamaño más grande para el título */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para mejorar la visibilidad */
   }
+
+ /* Asegúrate de que el texto "Back" no sea visible */
+ion-back-button .button-text {
+  display: none;
+}
+
+/* Asegúrate de que el icono sea visible */
+ion-back-button .button-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep ion-back-button .button-text {
+  display: none;
+}
+
+  

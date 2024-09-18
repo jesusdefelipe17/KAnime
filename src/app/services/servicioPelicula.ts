@@ -17,7 +17,7 @@ import { peliculaTMB } from '../interfaces/peliculaTMB';
   providedIn: 'root'
 })
 export class servicioPelicula {
- 
+  
 
   urlSafe: SafeResourceUrl;
   url:string;
@@ -27,9 +27,20 @@ export class servicioPelicula {
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
 
-  getPopularMovies() {
+getPopularMovies() {
     const path = `${this.baseUrl}/api/ultimosAnimes`;
     return this.http.get<AnimeResponse[]>(path);
+}
+
+getRecienAnadidos() {
+  const path = `${this.baseUrl}/api/getRecienAnadidos`;
+  return this.http.get<AnimeResponse[]>(path);
+}
+
+
+getRatingAnimes() {
+  const path = `${this.baseUrl}/api/getPopulares`;
+  return this.http.get<AnimeResponse[]>(path);
 }
 
   getPeliculaBusquedaScript(nombrePelicula) {

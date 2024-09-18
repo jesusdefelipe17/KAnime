@@ -36,7 +36,7 @@
               "src/global.scss",
               "node_modules/bootstrap/dist/css/bootstrap.min.css"
             ],
-            "scripts": [],
+            "scripts": [ "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js"],
             "aot": false,
             "vendorChunk": true,
             "extractLicenses": false,

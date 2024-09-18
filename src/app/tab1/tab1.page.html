@@ -1,25 +1,57 @@
-<div class="toolbar">
-  <ion-header>
-    <ion-toolbar class="toolbar-background">
-      <ion-title class="titulo">
-        KING ANIME TV
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-</div>
+<ion-header>
+  <ion-toolbar class="toolbar-background">
+    <ion-title class="titulo">KING ANIME TV</ion-title>
+  </ion-toolbar>
+</ion-header>
 
-<ion-content [fullscreen]="true">
-  <div class="album py-3">
-    <div class="container">
+<ion-content [fullscreen]="false">
+  <div class="album py-3 full-screen">
+    <div class="container" *ngIf="cargarPeliculasPopulares" >
+
+      <!-- Contenedor para el anime aleatorio -->
+      <div *ngIf="aleatorio" class="random-anime-container">
+        <!-- Contenedor de la imagen -->
+        <div class="random-anime-img-wrapper">
+          <div class="new-badge">NUEVO</div> <!-- Aviso de "NEW" -->
+          <div class="type-badge" [ngClass]="getTypeClass(aleatorio.tipo)">{{aleatorio.tipo}}</div> <!-- Aviso del tipo -->
+          <img class="random-anime-img" [src]="aleatorio.portada" alt="{{aleatorio.titulo}}" (error)="errorHandler($event)">
+          <div class="random-anime-info">
+            <div class="title-rating-wrapper">
+              <h4 class="random-anime-title">{{aleatorio.titulo}}</h4>
+              <div class="random-anime-rating">
+                <span>{{aleatorio.calificacion}}</span>
+                <i class="fa fa-star"></i> <!-- Icono de estrella -->
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Descripción debajo de la imagen -->
+        <div class="random-anime-description">
+          <p>{{aleatorio.descripcion}}</p>
+        </div>
+      </div>
+      
+      <!-- Botón para comenzar a ver -->
+      <div class="watch-button-wrapper">
+        <button class="watch-button">
+          <i class="fa fa-play-circle play-icon"></i> COMENZAR A VER
+        </button>
+      </div>
+      
+      
+      
       <!-- Contenedor para el título "Últimos Episodios" -->
       <div class="heading-container">
-        <h3 class="text-center">Últimos Episodios</h3>
+        <h3>Últimos Episodios</h3>
       </div>
       <br>
-      <div class="row card-group peliculas" *ngIf="cargarPeliculasPopulares">
-        <div class="col-md-6 col-lg-4 mb-4" *ngFor="let item of animes;">
+
+      <!-- Contenedor para el carrusel con ion-slides -->
+      <ion-slides [options]="slideOpts" #slides class="carousel-slides">
+        <ion-slide *ngFor="let item of animes">
           <div class="card anime-card">
-            <a [routerLink]="['/pagina-pelicula', item.id]">
+            <a [routerLink]="['/anime-perfil', item.id]">
               <div class="card-img-wrapper">
                 <img class="card-img-top" [src]="item.portada" alt="{{item.titulo}}" (error)="errorHandler($event)">
                 <i class="fas fa-play play-icon"></i>
@@ -36,11 +68,36 @@
               </div>
             </div>
           </div>
-        </div>
+        </ion-slide>
+      </ion-slides>
+      
+      <div class="heading-container">
+        <h3>Más Populares</h3>
       </div>
-      <div *ngIf="!cargarPeliculasPopulares" class="spinner-container">
-        <div class="loader"></div>
-      </div>
+      <br>
+      
+      <ion-slides [options]="popularesSlideOpts" *ngIf="populares.length > 0" #popularesSlides class="popular-slides">
+        <ion-slide *ngFor="let item of populares">
+          <div class="popular-poster">
+            <a (click)="navigateToPerfil(item.id)">
+              <div class="poster-img-wrapper">
+                <img class="poster-img" [src]="item.portada" alt="{{item.titulo}}" (error)="errorHandler($event)">
+                <div class="rating-container">
+                  <span class="rating-text">{{item.calificacion}}</span>
+                  <i class="fa fa-star rating-star"></i>
+                </div>
+              </div>
+            </a>
+            <p class="poster-title">{{item.titulo}}</p>
+          </div>
+        </ion-slide>
+      </ion-slides>
+
+    
     </div>
+    <div *ngIf="!cargarPeliculasPopulares" class="spinner-container">
+      <div class="loader"></div>
+    </div>
+    
   </div>
 </ion-content>
