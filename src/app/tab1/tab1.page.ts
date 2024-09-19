@@ -22,7 +22,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
     freeMode: true,
     grabCursor: true,
     speed: 600,
-    loop: true,
+    loop: false,
     autoplay: {
       delay: 3000,
       disableOnInteraction: false

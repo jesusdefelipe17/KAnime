@@ -1,0 +1,14 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Reproductor de Video</ion-title>
+    <ion-buttons slot="end">
+      <ion-button (click)="dismiss()">Cerrar</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <div class="video-container">
+    <iframe [src]="videoUrl" frameborder="0" allowfullscreen></iframe>
+  </div>
+</ion-content>

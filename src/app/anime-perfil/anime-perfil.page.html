@@ -7,6 +7,71 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
-  <!-- Contenido aquí -->
+<ion-content [fullscreen]="false">
+  <div class="album py-3 full-screen">
+    <div class="container" *ngIf="cargarAnime">
+
+      <!-- Contenedor para el anime aleatorio -->
+      <div *ngIf="anime" class="random-anime-container">
+        <!-- Contenedor de la imagen -->
+        <div class="random-anime-img-wrapper">
+          <img class="random-anime-img" [src]="anime.poster" alt="{{anime.titulo}}" (error)="errorHandler($event)">
+          <div class="random-anime-info">
+            <div class="title-rating-wrapper">
+              <h4 class="random-anime-title">{{anime.titulo}}</h4>
+              <div class="random-anime-rating">
+                <span>{{anime.calificacion}}</span>
+                <i class="fa fa-star"></i> <!-- Icono de estrella -->
+              </div>
+            </div>
+          </div>
+        </div>
+      
+        <!-- Descripción debajo de la imagen -->
+        <div class="random-anime-description">
+          <p>{{anime.descripcion}}</p>
+        </div>
+
+        <div class="anime-genre">
+            <span *ngFor="let genero of anime.generos; let isLast = last">
+              <span class="genre-pill">{{ genero }}</span><span *ngIf="!isLast"></span>
+            </span>
+        </div>
+        
+       
+        <!-- Pestañas para Episodios y Animes Similares -->
+        <div class="tabs">
+          <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)">
+            <ion-segment-button value="episodes">
+              Episodios
+            </ion-segment-button>
+            <ion-segment-button value="similar">
+              Animes Similares
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+        <!-- Contenido de la pestaña seleccionada -->
+        <div [ngSwitch]="selectedTab">
+          <div *ngSwitchCase="'episodes'" class="episodes-content">
+            <div *ngFor="let episodio of episodios" class="episode-item" (click)="openVideoModal(episodio)">
+              <i class="fa fa-play-circle play-icon"></i> 
+              <p class="episode-title">{{ episodio.episodio }}</p>
+              <i class="fa fa-download download-icon" (click)="downloadEpisode(episodio)"></i> <!-- Icono de descarga -->
+            </div>
+          </div>
+          <div *ngSwitchCase="'similar'" class="similar-animes-content">
+            <div *ngFor="let similar of similares">
+              <img [src]="similar.poster" alt="{{similar.titulo}}" (error)="errorHandler($event)">
+              <p>{{ similar.titulo }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+    <div *ngIf="!cargarAnime" class="spinner-container">
+      <div class="loader"></div>
+    </div>
+  </div>
 </ion-content>

@@ -11,6 +11,10 @@ import { serie } from '../interfaces/serie';
 import { temporada } from '../interfaces/temporada';
 import { environment } from 'src/environments/environment';
 import { peliculaTMB } from '../interfaces/peliculaTMB';
+import { AnimePerfilResponse } from '../interfaces/AnimePerfilResponse';
+import { Observable } from 'rxjs';
+import { EpisodiosResponse } from '../interfaces/EpisodiosResponse';
+import { VideoEpisodioResponse } from '../interfaces/VideoEpisodioResponse';
 
 
 @Injectable({
@@ -30,6 +34,25 @@ export class servicioPelicula {
 getPopularMovies() {
     const path = `${this.baseUrl}/api/ultimosAnimes`;
     return this.http.get<AnimeResponse[]>(path);
+}
+
+getAnimePerfil(anime) {
+  const path = `${this.baseUrl}/api/getAnimePerfil?anime=${anime}`;
+  return this.http.get<AnimePerfilResponse>(path);
+}
+
+getEpisodiosAnime(url_anime) {
+  const path = `${this.baseUrl}/api/episodios?url_serie=https://www3.animeflv.net/anime/${url_anime}`;
+  return this.http.get<EpisodiosResponse[]>(path);
+}
+getEpisodiosAnimeVideo(url_anime) {
+  const path = `${this.baseUrl}/api/videos?url_episodio=https://www3.animeflv.net/ver/${url_anime}`;
+  return this.http.get<VideoEpisodioResponse[]>(path);
+}
+
+getContenidoSimilar(id: string): Observable<AnimePerfilResponse[]> {
+  const path = `${this.baseUrl}/api/getAnimePerfil?anime=${id}`;
+  return this.http.get<AnimePerfilResponse[]>(path);
 }
 
 getRecienAnadidos() {

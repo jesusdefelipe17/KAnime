@@ -8,6 +8,21 @@
   text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
 }
 
+.container {
+  padding: 0;
+}
+
+.heading-container {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+}
+.py-3{
+  padding-top: 0!important;
+}
+
+
+
 .full-screen {
   min-height: 100%; /* Ocupa al menos el 100% de la altura de la pantalla */
   display: flex;     /* Esto puede ayudarte a centrar contenido */
@@ -267,7 +282,6 @@ ion-slide {
 .random-anime-img-wrapper {
   position: relative;
   overflow: hidden;
-  border-radius: 10px;
 }
 
 /* Imagen del anime aleatorio */
@@ -378,6 +392,7 @@ ion-slide {
   width: 100%;
   display: flex;
   justify-content: center;
+  padding: 5%;
 }
 
 /* Estilo para el botón */
