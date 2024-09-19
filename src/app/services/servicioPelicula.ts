@@ -26,7 +26,7 @@ export class servicioPelicula {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  private baseUrl = 'http://127.0.0.1:8000'; // Usa la URL del entorno
+  private baseUrl = 'https://electoral-emmey-kservice-32204338.koyeb.app'; // Usa la URL del entorno
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
