@@ -15,6 +15,7 @@ import { AnimePerfilResponse } from '../interfaces/AnimePerfilResponse';
 import { Observable } from 'rxjs';
 import { EpisodiosResponse } from '../interfaces/EpisodiosResponse';
 import { VideoEpisodioResponse } from '../interfaces/VideoEpisodioResponse';
+import { AnimeBusqueda } from '../interfaces/AnimeBusqueda';
 
 
 @Injectable({
@@ -26,7 +27,8 @@ export class servicioPelicula {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  private baseUrl = 'https://electoral-emmey-kservice-32204338.koyeb.app'; // Usa la URL del entorno
+  private baseUrl = 'http://127.0.0.1:8000'; 
+  //private baseUrl = 'https://eed7f18e-c04b-4acd-a082-80874170e2c5-00-3lo2guihk5af8.riker.replit.dev'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
@@ -41,13 +43,19 @@ getAnimePerfil(anime) {
   return this.http.get<AnimePerfilResponse>(path);
 }
 
-getEpisodiosAnime(url_anime) {
-  const path = `${this.baseUrl}/api/episodios?url_serie=https://www3.animeflv.net/anime/${url_anime}`;
+getEpisodiosAnime(url_anime: string, pagina: number) {
+  const path = `${this.baseUrl}/api/episodios?url_serie=https://www3.animeflv.net/anime/${url_anime}&pagina=${pagina}`;
   return this.http.get<EpisodiosResponse[]>(path);
 }
+
 getEpisodiosAnimeVideo(url_anime) {
   const path = `${this.baseUrl}/api/videos?url_episodio=https://www3.animeflv.net/ver/${url_anime}`;
   return this.http.get<VideoEpisodioResponse[]>(path);
+}
+
+getAnimeBusqueda(anime: string): Observable<AnimeBusqueda[]> {
+  const path = `${this.baseUrl}/api/getAnime?anime=${anime}`;
+  return this.http.get<AnimeBusqueda[]>(path);
 }
 
 getContenidoSimilar(id: string): Observable<AnimePerfilResponse[]> {

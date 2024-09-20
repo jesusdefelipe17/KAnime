@@ -25,9 +25,7 @@ export class RegistroPage implements OnInit {
     if(this.pass!=this.repetirPass){
       this.showToast();
     }else{
-      this.usuario.user=this.user;
-      this.usuario.pass=this.pass;
-      this.usuario.repetirPass=this.repetirPass;
+
       this.firestoreService.insertar(this.usuario);
     }
  

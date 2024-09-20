@@ -22,13 +22,9 @@
       <ion-label position="floating">Usuario</ion-label>
       <ion-input type="text" [(ngModel)]="user" name="usuario" required></ion-input>
     </ion-item>
-    <ion-item lines="full">
-      <ion-label position="floating">Contraseña</ion-label>
-      <ion-input type="text" [(ngModel)]="pass" name="pass"required></ion-input>
-    </ion-item>
     <ion-row>
       <ion-col>
-        <ion-button (click)="iniciarse();" color="danger" expand="block">Iniciar Sesion</ion-button>
+        <ion-button (click)="login();" color="danger" expand="block">Iniciar Sesion</ion-button>
       </ion-col>
     </ion-row>
  

@@ -1,36 +1,39 @@
-<div class="toolbar">
-  <ion-header>
-    <ion-toolbar class="new-background-color border border-dark">
-      <ion-title class="titulo">
-       ONE FOR ALL TV
-      </ion-title>
-    </ion-toolbar>
-  </ion-header>
-  </div>
-  <ion-content [fullscreen]="true">
-    <ion-header collapse="condense">
-      <ion-toolbar class="toolbar">
-      </ion-toolbar>
-    </ion-header>
+<ion-header>
+  <ion-toolbar class="toolbar-background">
+    <ion-title class="titulo">Buscar Anime</ion-title>
+  </ion-toolbar>
+</ion-header>
 
+<ion-content [fullscreen]="false">
+  <div class="content-wrapper"> <!-- Div envolvente -->
+    <!-- Barra de búsqueda -->
+    <ion-searchbar 
+      [(ngModel)]="searchQuery" 
+      (ionInput)="onSearchChange($event)" 
+      placeholder="Buscar anime...">
+    </ion-searchbar>
 
-    <div class="perfil">
-
-      <h1>{{usuario}}</h1>
+    <!-- Lista de resultados -->
+    <div class="anime-container">
+      <div *ngFor="let anime of resultadosFiltrados" class="anime-item">
+        <div class="anime-thumbnail">
+          <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div> <!-- Aviso del tipo -->
+          <img class="poster-img" [src]="anime.poster" alt="{{anime.titulo}}" [routerLink]="['/anime-perfil', anime.id]">
+          <div class="rating-container">
+            <span class="rating-text">{{anime.puntuacion}}</span>
+            <i class="fa fa-star rating-star"></i>
+          </div>
+        </div>
+        
+        <div class="anime-info">
+          <h2 class="anime-title">{{ anime.titulo }}</h2>
+        </div>
+      </div>
       
+      <div *ngIf="buscando" class="spinner-container">
+        <div class="loader"></div>
+      </div>
     </div>
-
-<ion-content class="auth-form">
-  <div class="album py-3">
-  <ion-grid>
-    <ion-row>
-      <ion-col align-self-center>
-        <ion-button [routerLink]="['/registro']" expand="block" color="primary">Registro</ion-button>
-        <span class="divider line one-line">or</span>
-        <span class="already">Already a user?</span>
-        <ion-button [routerLink]="['/login']" expand="block" color="danger">Iniciar Sesion</ion-button>
-      </ion-col>
-    </ion-row>
-  </ion-grid>
-</div>
+   
+  </div>
 </ion-content>

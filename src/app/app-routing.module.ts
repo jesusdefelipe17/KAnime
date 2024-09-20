@@ -34,6 +34,10 @@ const routes: Routes = [
     path: 'video-player',
     loadChildren: () => import('./video-player/video-player.module').then( m => m.VideoPlayerPageModule)
   },
+  {
+    path: 'tab2',
+    loadChildren: () => import('./tab2/tab2.module').then( m => m.Tab2PageModule)
+  },
 
 ];
 @NgModule({

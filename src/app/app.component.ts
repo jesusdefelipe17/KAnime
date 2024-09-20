@@ -1,25 +1,19 @@
 import { Component } from '@angular/core';
-import { BaseDatosService } from '../app/services/base-datos.service';
-import { ActivatedRoute } from '@angular/router';
-import { Router } from '@angular/router';
-import { usuario } from './interfaces/usuario';
+import { Platform } from '@ionic/angular';
+import { Storage } from '@ionic/storage-angular';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
-
 export class AppComponent {
-  
-  constructor() {}
-
-  ngOnInit(): void {
-
-
+  constructor(private platform: Platform, private storage: Storage) {
+    this.initializeApp();
   }
-      
-    
-    
-  }
-  
 
+  async initializeApp() {
+    await this.platform.ready();
+    await this.storage.create();  // Inicializamos el storage
+  }
+}

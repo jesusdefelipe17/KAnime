@@ -30,14 +30,15 @@
         <div class="random-anime-description">
           <p>{{aleatorio.descripcion}}</p>
         </div>
+         <!-- Botón para comenzar a ver -->
+        <div class="watch-button-wrapper">
+          <button class="watch-button" [routerLink]="['/anime-perfil', aleatorio.id]">
+            <i class="fa fa-play-circle play-icon"></i> COMENZAR A VER
+          </button>
+        </div>
       </div>
       
-      <!-- Botón para comenzar a ver -->
-      <div class="watch-button-wrapper">
-        <button class="watch-button">
-          <i class="fa fa-play-circle play-icon"></i> COMENZAR A VER
-        </button>
-      </div>
+     
       
       
       

@@ -15,13 +15,13 @@
       <div *ngIf="anime" class="random-anime-container">
         <!-- Contenedor de la imagen -->
         <div class="random-anime-img-wrapper">
-          <img class="random-anime-img" [src]="anime.poster" alt="{{anime.titulo}}" (error)="errorHandler($event)">
+          <img class="random-anime-img" [src]="anime.poster" alt="{{anime.titulo}}">
           <div class="random-anime-info">
             <div class="title-rating-wrapper">
               <h4 class="random-anime-title">{{anime.titulo}}</h4>
               <div class="random-anime-rating">
                 <span>{{anime.calificacion}}</span>
-                <i class="fa fa-star"></i> <!-- Icono de estrella -->
+                <i class="fa fa-star"></i>
               </div>
             </div>
           </div>
@@ -33,12 +33,11 @@
         </div>
 
         <div class="anime-genre">
-            <span *ngFor="let genero of anime.generos; let isLast = last">
-              <span class="genre-pill">{{ genero }}</span><span *ngIf="!isLast"></span>
-            </span>
+          <span *ngFor="let genero of anime.generos; let isLast = last">
+            <span class="genre-pill">{{ genero }}</span><span *ngIf="!isLast"></span>
+          </span>
         </div>
         
-       
         <!-- Pestañas para Episodios y Animes Similares -->
         <div class="tabs">
           <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)">
@@ -55,23 +54,31 @@
         <div [ngSwitch]="selectedTab">
           <div *ngSwitchCase="'episodes'" class="episodes-content">
             <div *ngFor="let episodio of episodios" class="episode-item" (click)="openVideoModal(episodio)">
-              <i class="fa fa-play-circle play-icon"></i> 
+              <i class="fa fa-play-circle play-icon"></i>
               <p class="episode-title">{{ episodio.episodio }}</p>
-              <i class="fa fa-download download-icon" (click)="downloadEpisode(episodio)"></i> <!-- Icono de descarga -->
+              <i class="fa fa-download download-icon"></i>
             </div>
+
+            <!-- Infinite Scroll para cargar más episodios al hacer scroll -->
+            <ion-infinite-scroll threshold="50px" (ionInfinite)="cargarMasEpisodios($event)">
+              <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más episodios...">
+              </ion-infinite-scroll-content>
+            </ion-infinite-scroll>
           </div>
+
           <div *ngSwitchCase="'similar'" class="similar-animes-content">
             <div *ngFor="let similar of similares">
-              <img [src]="similar.poster" alt="{{similar.titulo}}" (error)="errorHandler($event)">
+              <img [src]="similar.poster" alt="{{similar.titulo}}">
               <p>{{ similar.titulo }}</p>
             </div>
           </div>
         </div>
       </div>
-      
     </div>
+
     <div *ngIf="!cargarAnime" class="spinner-container">
       <div class="loader"></div>
     </div>
   </div>
 </ion-content>
+
