@@ -48,7 +48,6 @@
       </div>
       <br>
 
-      <!-- Contenedor para el carrusel con ion-slides -->
       <ion-slides [options]="slideOpts" #slides class="carousel-slides">
         <ion-slide *ngFor="let item of animes">
           <div class="card anime-card">
@@ -62,7 +61,11 @@
               <h5 class="card-title">{{item.titulo}}</h5>
               <p class="card-text">{{item.episodio}}</p>
               <div class="card-footer d-flex justify-content-around">
-                <i class="fas fa-heart favorite-icon" title="Añadir a favoritos" (click)="guardarAnime(item.id)"></i>
+                <i class="fas fa-heart heart" 
+                  [class.filled]="isFavorito(item.id)" 
+                  title="Añadir a favoritos" 
+                  (click)="guardarAnime(item.id)">
+                </i>
                 <i class="fas fa-share-alt share-icon" title="Compartir"></i>
                 <i class="fas fa-list-alt season-icon" title="Ver temporada completa" [routerLink]="['/anime-perfil', item.id]"></i>
                 <i class="fas fa-cloud-download-alt download-icon" title="Descargar"></i>
@@ -71,6 +74,7 @@
           </div>
         </ion-slide>
       </ion-slides>
+      
       
       <div class="heading-container">
         <h3>Más Populares</h3>
@@ -94,6 +98,7 @@
         </ion-slide>
       </ion-slides>
 
+      <ion-toast #openToast duration="2000" position="bottom" class="custom-toast"></ion-toast>
     
     </div>
     <div *ngIf="!cargarPeliculasPopulares" class="spinner-container">

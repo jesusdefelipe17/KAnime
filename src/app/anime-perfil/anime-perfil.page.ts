@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute, Router } from '@angular/router';
 import { servicioPelicula } from '../services/servicioPelicula';
-import { NavController } from '@ionic/angular';
+import { NavController, ToastController } from '@ionic/angular';
 import { AnimePerfilResponse } from '../interfaces/AnimePerfilResponse';
 import { forkJoin, of } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
@@ -11,6 +11,7 @@ import { VideoEpisodioResponse } from '../interfaces/VideoEpisodioResponse';
 import { ModalController } from '@ionic/angular';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import { VideoPlayerPage } from '../video-player/video-player.page'; 
+import { DatabaseService } from '../services/data-base.service';
 
 @Component({
   selector: 'app-anime-perfil',
@@ -29,18 +30,38 @@ export class AnimePerfilPage implements OnInit {
   cargandoMasEpisodios: boolean = false; // Indica si se están cargando más episodios
   hayMasEpisodios: boolean = true; // Indica si hay más episodios para cargar
 
+  addAnime: AnimePerfilResponse;
+  username : string;
+  favoritos: { idAnime: string }[] = []; // Cambiado para que sea un arreglo de objetos
+  filledHearts: Set<string> = new Set(); // Para guardar los IDs de animes llenos
+  @ViewChild('openToast', { static: false }) openToast: any;
+
+
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public sanitizer: DomSanitizer,
     private servicioAnime: servicioPelicula,
     private navCtrl: NavController,
-    private modalCtrl: ModalController
-  ) { }
+    private modalCtrl: ModalController,
+    private dbService: DatabaseService, 
+    private toastController: ToastController
+  ) { 
 
-  ngOnInit() {
+    this.dbService.favoritos$.subscribe(favoritos => {
+      this.favoritos = favoritos; // Actualiza la lista de favoritos
+    });
+  }
+
+  async ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
-    this.cargarAnimePerfil();
+    this.username = await this.dbService.getUser();
+  
+  if (this.username) {
+    await this.dbService.loadUserAnimes(this.username); // Cargar favoritos
+  }
+
+  this.cargarAnimePerfil();
   }
 
   cargarAnimePerfil() {
@@ -132,4 +153,38 @@ cargarMasEpisodios(event: any) {
       console.error('No hay videos disponibles para este episodio.');
     }
   }
+
+  isFavorito(animeId: string): boolean {
+    return this.favoritos.some(fav => fav.idAnime === animeId);
+  }
+  
+  async guardarAnime(idAnime: string) {
+    if (!this.isFavorito(idAnime)) {
+      const datosAnime = await this.servicioAnime.getAnimePerfil(idAnime).toPromise();
+      
+      if (this.username) {
+        await this.dbService.addAnime(this.username, idAnime, datosAnime.titulo, datosAnime.calificacion, datosAnime.poster);
+        
+        this.presentToast('bottom','Añadido a favoritos','success');
+        
+        this.favoritos.push({ idAnime: idAnime });
+        this.filledHearts.add(idAnime);
+      }
+    } else {
+      this.presentToast('bottom','Ya está en favoritos','danger');
+    }
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom',message:string,color:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: position,
+      color: color
+    });
+
+    await toast.present();
+  }
+
+
 }

@@ -10,8 +10,12 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class DatabaseService {
 
   private storage: Storage;
+
   public animesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
   public animes$: Observable<any[]> = this.animesSubject.asObservable();
+
+  private favoritosSubject = new BehaviorSubject<{ idAnime: string }[]>([]);
+  public favoritos$ = this.favoritosSubject.asObservable();
 
   constructor(private sqlite: SQLite, private platform: Platform, private storageService: Storage) {
     this.platform.ready().then(() => {
@@ -36,7 +40,16 @@ export class DatabaseService {
         animes.push({ username, idAnime, title, rating, poster });
         await this.storage.set('animes', animes);
         this.animesSubject.next(animes); // Actualizar el BehaviorSubject
+
+        // Actualiza la lista de favoritos
+        const favoritos = await this.getUserAnimes(username);
+        this.favoritosSubject.next(favoritos); // Notificar sobre cambios en favoritos
       }
+
+      async loadUserAnimes(username: string) {
+        const animes = await this.getUserAnimes(username);
+        this.favoritosSubject.next(animes); // Actualizar el BehaviorSubject de favoritos
+    }
     
       // Método para obtener los animes de un usuario
       async getUserAnimes(username: string) {
@@ -45,11 +58,14 @@ export class DatabaseService {
       }
     
       // Método para eliminar un anime
-      async deleteAnime(animeId: string) {
+      async deleteAnime(animeId: string, username: string) {
         const animes = await this.storage.get('animes') || [];
         const updatedAnimes = animes.filter(anime => anime.idAnime !== animeId);
         await this.storage.set('animes', updatedAnimes);
         this.animesSubject.next(updatedAnimes); // Actualizar el BehaviorSubject
+    
+        // Actualiza la lista de favoritos
+        await this.loadUserAnimes(username); // Recargar favoritos
       }
       async addUser(username: string) {
           const users = await this.storage.get('users') || [];

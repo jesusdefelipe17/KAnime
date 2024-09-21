@@ -47,9 +47,16 @@
     padding-bottom: 0.5rem; /* Espacio entre el texto y la línea */
   }
   
-ion-content {
-    background-color: #282828; /* Color de fondo deseado */
-}
+  ion-content {
+    --ion-background-color: #212121; /* Fondo del contenido */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%; /* Garantiza que ocupe toda la altura */
+  }
+  ion-label {
+    --ion-background-color: #212121; /* Fondo del contenido */
+  }
 
 /* Asegúrate de que el contenedor principal también tenga el color de fondo */
 .album {
@@ -82,4 +89,23 @@ ion-content {
 
 .anime-item {
   background-color: #282828; /* Asegúrate de que los ítems también tengan el mismo fondo */
+}
+
+@keyframes tv-off-effect {
+  0% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scaleY(0.1); /* Comprime verticalmente */
+    opacity: 0.7;
+  }
+  100% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+}
+
+.tv-off {
+  animation: tv-off-effect 0.5s ease-out forwards;
 }

@@ -16,6 +16,12 @@
         <!-- Contenedor de la imagen -->
         <div class="random-anime-img-wrapper">
           <img class="random-anime-img" [src]="anime.poster" alt="{{anime.titulo}}">
+          <i class="fas fa-heart heart" 
+            [class.filled]="isFavorito(anime.id)" 
+            title="Añadir a favoritos" 
+            (click)="guardarAnime(anime.id)"
+            style="position: absolute; top: 10px; right: 10px; z-index: 10; font-size: 44px; ">
+          </i>
           <div class="random-anime-info">
             <div class="title-rating-wrapper">
               <h4 class="random-anime-title">{{anime.titulo}}</h4>
@@ -37,7 +43,7 @@
             <span class="genre-pill">{{ genero }}</span><span *ngIf="!isLast"></span>
           </span>
         </div>
-        
+
         <!-- Pestañas para Episodios y Animes Similares -->
         <div class="tabs">
           <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)">

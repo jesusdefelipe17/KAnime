@@ -342,3 +342,28 @@ ion-segment-button[aria-checked="true"] {
   --border-radius: 0;
 }
   
+.heart {
+  font-size: 24px; /* Tamaño del corazón */
+  color: gray; /* Color por defecto */
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.heart.filled {
+  color: #45a049; /* Color cuando está lleno */
+  animation: explode 0.3s ease forwards; /* Llama a la animación de explosión */
+}
+
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}

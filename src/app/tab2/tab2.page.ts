@@ -65,8 +65,13 @@ export class Tab2Page implements OnInit {
     }
   }
 
-  async deleteAnime(animeId: string) {
-    await this.dbService.deleteAnime(animeId);
+  async deleteAnime(animeId: string,slidingItem) {
+    slidingItem.el.classList.add('tv-off');
+
+    setTimeout(() => {
+     this.dbService.deleteAnime(animeId,this.username);
+    }, 500);
+    
   }
 
   ngOnDestroy() {

@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
 import { servicioPelicula } from '../services/servicioPelicula'; // Servicio importado
 import { AnimeBusqueda } from '../interfaces/AnimeBusqueda';
+import { DatabaseService } from '../services/data-base.service';
+import { ToastController } from '@ionic/angular';
+import { forkJoin } from 'rxjs';
+import { AnimePerfilResponse } from '../interfaces/AnimePerfilResponse';
 
 @Component({
   selector: 'app-tab3',
@@ -19,15 +23,23 @@ export class Tab3Page {
 
   private searchTimeout: any; // Variable para manejar el debounce
 
+  username : string;
+  favoritos: { idAnime: string }[] = []; // Cambiado para que sea un arreglo de objetos
+  filledHearts: Set<string> = new Set(); // Para guardar los IDs de animes llenos
+  @ViewChild('openToast', { static: false }) openToast: any;
+  addAnime: AnimePerfilResponse;
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private control: Router,
-    private animeService: servicioPelicula // Servicio inyectado
+    private animeService: servicioPelicula ,// Servicio inyectado
+
   ) {}
 
-  ngOnInit() {
+   ngOnInit() {
     // Inicialmente, no hay animes cargados
     this.resultadosFiltrados = this.animes; 
+
   }
 
   // Función para manejar el cambio en la barra de búsqueda con debounce
@@ -81,4 +93,5 @@ export class Tab3Page {
         return '';
     }
   }
+
 }

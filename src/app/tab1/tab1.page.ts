@@ -48,8 +48,11 @@ export class Tab1Page implements OnInit, AfterViewInit {
   recienAnadidos = [];
   aleatorio: any = null;
   username : string;
+  favoritos: { idAnime: string }[] = []; // Cambiado para que sea un arreglo de objetos
+  filledHearts: Set<string> = new Set(); // Para guardar los IDs de animes llenos
+  @ViewChild('openToast', { static: false }) openToast: any;
   
-  constructor(private servioPelicula: servicioPelicula,private router: Router, private dbService: DatabaseService, private toastCtrl: ToastController) {}
+  constructor(private servioPelicula: servicioPelicula,private router: Router, private dbService: DatabaseService, private toastController: ToastController) {}
 
   truncateText(text: string): string {
     if (text.length > this.TITLE_MAX_LENGTH) {
@@ -59,27 +62,35 @@ export class Tab1Page implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+      this.dbService.favoritos$.subscribe(favoritos => {
+          this.favoritos = favoritos; // Actualiza la lista de favoritos
+      });
 
-    forkJoin({
-      popularMovies: this.servioPelicula.getPopularMovies(),
-      ratingAnimes: this.servioPelicula.getRatingAnimes(),
-      recienAnadidos: this.servioPelicula.getRecienAnadidos()
-    }).subscribe(({ popularMovies, ratingAnimes, recienAnadidos }) => {
-      this.animes = popularMovies;
+      // Cargar animes populares y otros datos
+      forkJoin({
+          popularMovies: this.servioPelicula.getPopularMovies(),
+          ratingAnimes: this.servioPelicula.getRatingAnimes(),
+          recienAnadidos: this.servioPelicula.getRecienAnadidos(),
+      }).subscribe(async ({ popularMovies, ratingAnimes, recienAnadidos }) => {
+          this.animes = popularMovies;
+          this.populares = ratingAnimes.map(item => ({
+              ...item,
+              titulo: this.truncateText(item.titulo)
+          }));
+          this.recienAnadidos = recienAnadidos;
 
-      this.populares = ratingAnimes.map(item => ({
-        ...item,
-        titulo: this.truncateText(item.titulo)
-      }));
+          this.username = await this.dbService.getUser();
+          if (this.username) {
+              await this.dbService.loadUserAnimes(this.username); // Cargar favoritos
+          }
 
-      this.recienAnadidos = recienAnadidos;
-      if (this.recienAnadidos.length > 0) {
-        const randomIndex = Math.floor(Math.random() * this.recienAnadidos.length);
-        this.aleatorio = this.recienAnadidos[randomIndex];
-      }
+          if (this.recienAnadidos.length > 0) {
+              const randomIndex = Math.floor(Math.random() * this.recienAnadidos.length);
+              this.aleatorio = this.recienAnadidos[randomIndex];
+          }
 
-      this.cargarPeliculasPopulares = true;
-    });
+          this.cargarPeliculasPopulares = true;
+      });
   }
 
   ngAfterViewInit() {
@@ -111,43 +122,45 @@ export class Tab1Page implements OnInit, AfterViewInit {
     this.router.navigate(['/anime-perfil', id]);
   }
 
-  async guardarAnime(idAnime: string) {
-
-  forkJoin({
-        datosAnime: this.servioPelicula.getAnimePerfil(idAnime),
-       
-        recienAnadidos: this.servioPelicula.getRecienAnadidos()
-      }).subscribe(async ({ datosAnime}) => {
-
-         this.addAnime = datosAnime;
-
-        this.username = await this.dbService.getUser();
-    
-        if(this.username){
-    
-          await this.dbService.addAnime(this.username,idAnime,this.addAnime.titulo,this.addAnime.calificacion ,this.addAnime.poster);
-    
-          this.toastCtrl.create({
-            message: 'Añadido a favoritos',
-            duration: 2000,
-            cssClass: 'custom-toast',
-            position: 'bottom'  // Cambia la posición a la parte inferior
-          }).then((toast) => {
-            toast.present();
-          });
-          
-    
-        }else{
-    
-        }
-
-       
-      
-      });
-
-  
-   
-
+  isFavorito(animeId: string): boolean {
+    return this.favoritos.some(fav => fav.idAnime === animeId);
   }
-  
+
+  async guardarAnime(idAnime: string) {
+    if (!this.isFavorito(idAnime)) {
+      forkJoin({
+        datosAnime: this.servioPelicula.getAnimePerfil(idAnime),
+        recienAnadidos: this.servioPelicula.getRecienAnadidos()
+      }).subscribe(async ({ datosAnime }) => {
+        this.addAnime = datosAnime;
+
+        if (this.username) {
+          await this.dbService.addAnime(this.username, idAnime, this.addAnime.titulo, this.addAnime.calificacion, this.addAnime.poster);
+          
+           // Muestra el toast
+        
+           this.presentToast('bottom','Añadido a favoritos','success');
+
+          // Actualiza la lista de favoritos
+          this.favoritos.push({ idAnime: idAnime });
+          this.filledHearts.add(idAnime);
+        }
+      });
+    } else {
+    
+      this.presentToast('bottom','Ya esta en favoritos','danger');
+      
+    }
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom',message:string,color:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: position,
+      color: color
+    });
+
+    await toast.present();
+  }
 }

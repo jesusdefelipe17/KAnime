@@ -4,9 +4,9 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="false" style="--ion-item-background: #212121;"> 
+<ion-content [fullscreen]="false" style="--ion-content-background: #212121;"> 
   <ion-list lines="none" *ngIf="animes.length > 0" style="--ion-item-background: #212121;">
-    <ion-item-sliding *ngFor="let anime of animes" style="margin-bottom: 16px; background-color: #212121; --ion-item-background: #212121;">
+    <ion-item-sliding #slidingItem *ngFor="let anime of animes; let i = index" style="margin-bottom: 16px; background-color: #212121;">
       <ion-item>
         <ion-thumbnail slot="start" style="width: 150px; height: 100%; padding-top: 4%;">
           <img [src]="anime.poster" alt="{{ anime.title }}" style="width: 100%; height: 100%; object-fit: cover;">
@@ -20,15 +20,16 @@
         </ion-label>
       </ion-item>
       <ion-item-options side="end">
-        <ion-item-option color="danger" (click)="deleteAnime(anime.idAnime)">
+        <ion-item-option color="danger" (click)="deleteAnime(anime.idAnime,slidingItem)">
           Eliminar
         </ion-item-option>
       </ion-item-options>
     </ion-item-sliding>
+    
   </ion-list>
   
-  <ion-item *ngIf="animes.length === 0" style="background-color: #212121; height: calc(100vh - 56px); border: none;">
-    <ion-label style="color: white; text-align: center; display: flex; justify-content: center; align-items: center; height: 100%;">
+  <ion-item *ngIf="animes.length === 0" lines="none" style="--ion-item-background: #212121; height: calc(100vh - 56px); border: none;">
+    <ion-label style="color: white; text-align: center; display: flex; justify-content: center; align-items: center; height: 100%; padding-top: 10%;">
       No hay animes guardados.
     </ion-label>
   </ion-item>
