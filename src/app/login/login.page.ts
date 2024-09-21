@@ -1,11 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { usuario } from '../interfaces/usuario';
-import { BaseDatosService } from '../services/base-datos.service';
 import { ToastController } from '@ionic/angular';
-import { Router } from '@angular/router';
 import { NavController } from '@ionic/angular';
-import { Storage } from '@ionic/storage-angular';  // Importa Ionic Storage
-import { DatabaseService } from '../services/data-base.service';
+import { Storage } from '@ionic/storage-angular';
+import { DatabaseService } from '../services/data-base.service'; // Servicio de base de datos
 
 @Component({
   selector: 'app-login',
@@ -14,57 +12,47 @@ import { DatabaseService } from '../services/data-base.service';
 })
 export class LoginPage implements OnInit {
   
-  user2: usuario;
   user: string;
   pass: string;
-  repetirPass: string;
   usuario: usuario = new usuario();
 
   constructor(
     private toastCtrl: ToastController,
-    private router: Router,
     private navCtrl: NavController,
-    private storage: Storage,
-    private dataBaseService :DatabaseService
+    private storage: Storage, // Para almacenar el estado de sesión
+    private dataBaseService: DatabaseService // Servicio de base de datos
   ) {}
 
   async ngOnInit() {
-    // Aquí podrías verificar si ya hay sesión iniciada en este punto
+    // Verifica si ya hay una sesión iniciada
     const isLoggedIn = await this.storage.get('isLoggedIn');
     if (isLoggedIn) {
-      // Si ya está logueado, redirige a la página principal
-      this.navCtrl.navigateRoot('/tab2');
+      // Si ya ha iniciado sesión, redirigir a Tab2
+      this.navCtrl.navigateRoot('/tabs/tab2');
     }
   }
 
   async login() {
-    // Buscar el usuario por nombre de usuario
+    // Buscar el usuario en la base de datos por nombre
     const existingUser = await this.dataBaseService.findUserByUsername(this.user);
     
     if (!existingUser) {
-      // Si no existe, crea un nuevo usuario en la base de datos
-      this.usuario.username = this.user;  // Asigna el nombre de usuario
-  
-      await this.dataBaseService.addUser(this.usuario.username);  // Método para agregar el usuario
-    } else {
-      // Si el usuario existe, verifica la contraseña
-      if (existingUser.pass !== this.pass) {
-        this.showToast();  // Contraseña incorrecta
-        return;
-      }
+      // Si no existe el usuario, crearlo en la base de datos
+      await this.dataBaseService.addUser(this.user); // Crear el usuario en la base de datos
     }
-  
-    // Si la autenticación es exitosa, guarda el estado de la sesión
+
+    // Guardar el estado de la sesión en Ionic Storage
     await this.storage.set('isLoggedIn', true);
-    await this.storage.set('username', existingUser ? existingUser.username : this.usuario.username);  // Asegúrate de usar el ID del usuario existente
-  
-    // Redirigir al usuario a la página principal
-    this.navCtrl.navigateRoot('/tab2');
+    await this.storage.set('user', this.user); // Guardar el nombre de usuario
+
+    // Redirigir al usuario a Tab2
+    this.navCtrl.navigateRoot('/tabs/tab2');
   }
-  
+
+  // Mostrar un mensaje de error si las credenciales son incorrectas
   showToast() {
     this.toastCtrl.create({
-      message: 'Error al iniciar sesión. Inténtalo de nuevo',
+      message: 'Error al iniciar sesión. Inténtalo de nuevo.',
       duration: 2000,
       cssClass: 'yourClass',
       position: 'middle'

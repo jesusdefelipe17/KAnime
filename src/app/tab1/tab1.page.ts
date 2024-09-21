@@ -1,9 +1,11 @@
 import { AfterViewInit, Component, OnInit, ViewChild } from '@angular/core';
 import { servicioPelicula } from '../services/servicioPelicula';
 import { AnimeResponse } from '../interfaces/AnimeResponse';
-import { IonSlides } from '@ionic/angular';
+import { IonSlides, ToastController } from '@ionic/angular';
 import { forkJoin } from 'rxjs';
 import { Router } from '@angular/router';
+import { DatabaseService } from '../services/data-base.service';
+import { AnimePerfilResponse } from '../interfaces/AnimePerfilResponse';
 
 @Component({
   selector: 'app-tab1',
@@ -11,8 +13,10 @@ import { Router } from '@angular/router';
   styleUrls: ['tab1.page.scss']
 })
 export class Tab1Page implements OnInit, AfterViewInit {
+
   todos;
   animes: AnimeResponse[] = []; 
+  addAnime: AnimePerfilResponse;
   cargarPeliculasPopulares: boolean = false;
   @ViewChild('slides', { static: false }) slides: IonSlides;
 
@@ -43,8 +47,9 @@ export class Tab1Page implements OnInit, AfterViewInit {
   populares = [];
   recienAnadidos = [];
   aleatorio: any = null;
+  username : string;
   
-  constructor(private servioPelicula: servicioPelicula,private router: Router) {}
+  constructor(private servioPelicula: servicioPelicula,private router: Router, private dbService: DatabaseService, private toastCtrl: ToastController) {}
 
   truncateText(text: string): string {
     if (text.length > this.TITLE_MAX_LENGTH) {
@@ -54,6 +59,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+
     forkJoin({
       popularMovies: this.servioPelicula.getPopularMovies(),
       ratingAnimes: this.servioPelicula.getRatingAnimes(),
@@ -103,6 +109,44 @@ export class Tab1Page implements OnInit, AfterViewInit {
 
   navigateToPerfil(id: string) {
     this.router.navigate(['/anime-perfil', id]);
+  }
+
+  async guardarAnime(idAnime: string) {
+
+  forkJoin({
+        datosAnime: this.servioPelicula.getAnimePerfil(idAnime),
+       
+        recienAnadidos: this.servioPelicula.getRecienAnadidos()
+      }).subscribe(async ({ datosAnime}) => {
+
+         this.addAnime = datosAnime;
+
+        this.username = await this.dbService.getUser();
+    
+        if(this.username){
+    
+          await this.dbService.addAnime(this.username,idAnime,this.addAnime.titulo,this.addAnime.calificacion ,this.addAnime.poster);
+    
+          this.toastCtrl.create({
+            message: 'Añadido a favoritos',
+            duration: 2000,
+            cssClass: 'yourClass',
+            position: 'middle'
+          }).then((obj) => {
+            obj.present();
+          });
+    
+        }else{
+    
+        }
+
+       
+      
+      });
+
+  
+   
+
   }
   
 }
