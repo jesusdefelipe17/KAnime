@@ -2,14 +2,16 @@ import { Injectable } from '@angular/core';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite/ngx';
 import { Platform } from '@ionic/angular';
 import { Storage } from '@ionic/storage-angular';
+import { BehaviorSubject, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
 export class DatabaseService {
-  private db: SQLiteObject;
+
   private storage: Storage;
-  private isNative: boolean = false;
+  public animesSubject: BehaviorSubject<any[]> = new BehaviorSubject<any[]>([]);
+  public animes$: Observable<any[]> = this.animesSubject.asObservable();
 
   constructor(private sqlite: SQLite, private platform: Platform, private storageService: Storage) {
     this.platform.ready().then(() => {
@@ -30,11 +32,10 @@ export class DatabaseService {
     
       // Método para agregar un anime a la base de datos
       async addAnime(username: string, idAnime: string, title: string, rating: string, poster: string) {
-          // Guardar en Storage (modo navegador)
-          const animes = await this.storage.get('animes') || [];
-          animes.push({ username, idAnime, title, rating, poster });
-          await this.storage.set('animes', animes);
-        
+        const animes = await this.storage.get('animes') || [];
+        animes.push({ username, idAnime, title, rating, poster });
+        await this.storage.set('animes', animes);
+        this.animesSubject.next(animes); // Actualizar el BehaviorSubject
       }
     
       // Método para obtener los animes de un usuario
@@ -45,9 +46,10 @@ export class DatabaseService {
     
       // Método para eliminar un anime
       async deleteAnime(animeId: string) {
-          const animes = await this.storage.get('animes') || [];
-          const updatedAnimes = animes.filter(anime => anime.idAnime !== animeId);
-          await this.storage.set('animes', updatedAnimes);
+        const animes = await this.storage.get('animes') || [];
+        const updatedAnimes = animes.filter(anime => anime.idAnime !== animeId);
+        await this.storage.set('animes', updatedAnimes);
+        this.animesSubject.next(updatedAnimes); // Actualizar el BehaviorSubject
       }
       async addUser(username: string) {
           const users = await this.storage.get('users') || [];

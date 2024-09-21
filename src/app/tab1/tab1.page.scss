@@ -424,4 +424,11 @@ ion-slide {
   background-color: #2d6328; /* Color más oscuro para hover */
 }
 
+.custom-toast {
+  background-color: #4caf50 !important;  /* Verde */
+  color: white !important;  /* Texto claro */
+  margin-bottom: 20px !important;  /* Margen inferior */
+  border-radius: 5px;  /* Bordes redondeados (opcional) */
+  padding: 10px 20px;  /* Espaciado interno para mejor visibilidad */
+}
 

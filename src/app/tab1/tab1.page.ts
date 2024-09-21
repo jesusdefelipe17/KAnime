@@ -130,11 +130,12 @@ export class Tab1Page implements OnInit, AfterViewInit {
           this.toastCtrl.create({
             message: 'Añadido a favoritos',
             duration: 2000,
-            cssClass: 'yourClass',
-            position: 'middle'
-          }).then((obj) => {
-            obj.present();
+            cssClass: 'custom-toast',
+            position: 'bottom'  // Cambia la posición a la parte inferior
+          }).then((toast) => {
+            toast.present();
           });
+          
     
         }else{
     
