@@ -33,21 +33,35 @@ export class LoginPage implements OnInit {
   }
 
   async login() {
-    // Buscar el usuario en la base de datos por nombre
+    // 1. Validar si `this.user` está definido y no es vacío
+    if (!this.user || this.user.trim() === '') {
+      console.log('El campo de usuario está vacío o no es válido.');
+      return; // Salir de la función si no hay un usuario válido
+    }
+  
+    // 2. Buscar el usuario en la base de datos por nombre
     const existingUser = await this.dataBaseService.findUserByUsername(this.user);
-    
+  
+    // 3. Si el usuario no existe, se crea
     if (!existingUser) {
-      // Si no existe el usuario, crearlo en la base de datos
       await this.dataBaseService.addUser(this.user); // Crear el usuario en la base de datos
     }
-
-    // Guardar el estado de la sesión en Ionic Storage
+  
+    // 4. Validar nuevamente si el usuario existe después de la creación
+    const finalUser = await this.dataBaseService.findUserByUsername(this.user);
+    if (!finalUser) {
+      console.log('El usuario no pudo ser creado o encontrado.');
+      return; // Salir de la función si el usuario no se pudo crear o encontrar
+    }
+  
+    // 5. Guardar el estado de la sesión en Ionic Storage
     await this.storage.set('isLoggedIn', true);
     await this.storage.set('user', this.user); // Guardar el nombre de usuario
-
-    // Redirigir al usuario a Tab2
+  
+    // 6. Redirigir al usuario a Tab2
     this.navCtrl.navigateRoot('/tabs/tab2');
   }
+  
 
   // Mostrar un mensaje de error si las credenciales son incorrectas
   showToast() {

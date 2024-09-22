@@ -27,8 +27,8 @@ export class servicioPelicula {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  private baseUrl = 'http://127.0.0.1:8000'; 
-  //private baseUrl = 'https://eed7f18e-c04b-4acd-a082-80874170e2c5-00-3lo2guihk5af8.riker.replit.dev'
+  //private baseUrl = 'http://127.0.0.1:8000'; 
+  private baseUrl = 'https://jittery-fanchon-kservice-2dfbeffb.koyeb.app'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
