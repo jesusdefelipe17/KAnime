@@ -7,7 +7,7 @@
 <ion-content [fullscreen]="false" style="--ion-content-background: #212121;"> 
   <ion-list lines="none" *ngIf="animes.length > 0" style="--ion-item-background: #212121;">
     <ion-item-sliding #slidingItem *ngFor="let anime of animes; let i = index" style="margin-bottom: 16px; background-color: #212121;">
-      <ion-item>
+      <ion-item [routerLink]="['/anime-perfil', anime.idAnime]">
         <ion-thumbnail slot="start" style="width: 150px; height: 100%; padding-top: 4%;">
           <img [src]="anime.poster" alt="{{ anime.title }}" style="width: 100%; height: 100%; object-fit: cover;">
         </ion-thumbnail>

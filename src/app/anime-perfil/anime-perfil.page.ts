@@ -5,13 +5,14 @@ import { servicioPelicula } from '../services/servicioPelicula';
 import { NavController, ToastController } from '@ionic/angular';
 import { AnimePerfilResponse } from '../interfaces/AnimePerfilResponse';
 import { forkJoin, of } from 'rxjs';
-import { catchError, tap } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { EpisodiosResponse } from '../interfaces/EpisodiosResponse';
 import { VideoEpisodioResponse } from '../interfaces/VideoEpisodioResponse';
 import { ModalController } from '@ionic/angular';
 import { VideoModalPage } from '../video-modal/video-modal.page';
 import { VideoPlayerPage } from '../video-player/video-player.page'; 
 import { DatabaseService } from '../services/data-base.service';
+import { AnimeResponse } from '../interfaces/AnimeResponse';
 
 @Component({
   selector: 'app-anime-perfil',
@@ -23,7 +24,7 @@ export class AnimePerfilPage implements OnInit {
   id: string;
   cargarAnime: boolean = false;
   anime: AnimePerfilResponse;
-  similares: AnimePerfilResponse[] = []; // Lista para contenido similar
+  similares: AnimeResponse[] = []; // Lista para contenido similar
   episodios: EpisodiosResponse[] = []; // Lista de episodios paginados
   selectedTab: string = 'episodes'; // Pestaña por defecto
   paginaActual: number = 0; // Mantiene el número de la página actual para la paginación
@@ -66,24 +67,30 @@ export class AnimePerfilPage implements OnInit {
 
   cargarAnimePerfil() {
     // Llamamos a los servicios para obtener la información inicial del anime
-    forkJoin({
-      anime: this.servicioAnime.getAnimePerfil(this.id),
-      episodios: this.cargarEpisodios(this.paginaActual), // Cargar los primeros episodios
-      similares: this.servicioAnime.getContenidoSimilar(this.id).pipe(
-        catchError(() => of([])) // Manejo de errores y retorno de array vacío si falla la llamada
-      )
-    }).subscribe({
-      next: ({ anime, episodios, similares }) => {
-        this.anime = anime;
+    this.servicioAnime.getAnimePerfil(this.id).pipe(
+      switchMap(anime => {
+        this.anime = anime;  // Guardamos la información del anime primero
+        // Ahora que tenemos el anime y sus géneros, hacemos la llamada para obtener los animes por género
+        return forkJoin({
+          episodios: this.cargarEpisodios(this.paginaActual),  // Cargar los primeros episodios
+          similares: this.servicioAnime.getAnimesByGenre(this.anime.generos).pipe(
+            catchError(() => of([])) // Manejo de errores en caso de que falle la llamada
+          )
+        });
+      })
+    ).subscribe({
+      next: ({ episodios, similares }) => {
         this.similares = similares;
         this.episodios = episodios;
-        this.cargarAnime = true;
+        this.cargarAnime = true; // Marcamos como cargado
       },
       error: (err) => {
         console.error('Error al cargar datos:', err);
-        this.cargarAnime = true; // Manejo de error
+        this.cargarAnime = true; // Marcamos como cargado incluso en caso de error
       }
     });
+    
+    
   }
 
 // Cargar episodios con paginación

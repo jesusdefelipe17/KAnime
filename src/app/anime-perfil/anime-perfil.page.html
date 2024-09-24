@@ -20,7 +20,7 @@
             [class.filled]="isFavorito(anime.id)" 
             title="Añadir a favoritos" 
             (click)="guardarAnime(anime.id)"
-            style="position: absolute; top: 10px; right: 10px; z-index: 10; font-size: 44px; ">
+            style="position: absolute; top: 15px; right: 25px; z-index: 15; font-size: 30px; ">
           </i>
           <div class="random-anime-info">
             <div class="title-rating-wrapper">
@@ -72,12 +72,22 @@
             </ion-infinite-scroll>
           </div>
 
-          <div *ngSwitchCase="'similar'" class="similar-animes-content">
-            <div *ngFor="let similar of similares">
-              <img [src]="similar.poster" alt="{{similar.titulo}}">
-              <p>{{ similar.titulo }}</p>
+          <div *ngSwitchCase="'similar'" class="anime-container">
+            <div *ngFor="let similar of similares" class="anime-item">
+              <div class="anime-thumbnail">
+                <img class="poster-img" [src]="similar.portada" alt="{{similar.titulo}}" [routerLink]="['/anime-perfil', similar.id]">
+                <div class="rating-container">
+                  <span class="rating-text">{{similar.calificacion}}</span>
+                  <i class="fa fa-star rating-star"></i>
+                </div>
+              </div>
+              
+              <div class="anime-info">
+                <h2 class="anime-title">{{ similar.titulo }}</h2>
+              </div>
             </div>
           </div>
+
         </div>
       </div>
     </div>

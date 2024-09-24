@@ -27,8 +27,8 @@ export class servicioPelicula {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  //private baseUrl = 'http://127.0.0.1:8000'; 
-  private baseUrl = 'https://jittery-fanchon-kservice-2dfbeffb.koyeb.app'
+  private baseUrl = 'http://127.0.0.1:8000'; 
+  //private baseUrl = 'https://jittery-fanchon-kservice-2dfbeffb.koyeb.app'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
@@ -58,10 +58,17 @@ getAnimeBusqueda(anime: string): Observable<AnimeBusqueda[]> {
   return this.http.get<AnimeBusqueda[]>(path);
 }
 
-getContenidoSimilar(id: string): Observable<AnimePerfilResponse[]> {
-  const path = `${this.baseUrl}/api/getAnimePerfil?anime=${id}`;
-  return this.http.get<AnimePerfilResponse[]>(path);
+getAnimesByGenre(generos: string[]): Observable<AnimeResponse[]> {
+  // Construir la URL añadiendo múltiples parámetros 'genre' en función del array de géneros
+  generos = this.obtenerDosGenerosAleatorios(generos);
+  const params = generos.map(genero => `genre=${encodeURIComponent(genero.toLowerCase())}`).join('&');
+  const path = `${this.baseUrl}/api/getAnimesByGenre?${params}`;
+  
+  // Realizar la solicitud HTTP con los géneros aleatorios
+  return this.http.get<AnimeResponse[]>(path);
 }
+
+
 
 getRecienAnadidos() {
   const path = `${this.baseUrl}/api/getRecienAnadidos`;
@@ -150,5 +157,19 @@ getRatingAnimes() {
     var path = 'https://api.themoviedb.org/3/search/tv?api_key=f206e13c8124d66161320fc69ca6960d&language=es-ES&query='.concat(palabraBusqueda).concat('&page=1&include_adult=false');
   
     return this.http.get<busqueda>(path);
+  }
+
+  obtenerDosGenerosAleatorios(generos: string[]): string[] {
+    const randomGeneros = [];
+    // Copia superficial para evitar modificar el array original
+    const generosCopy = [...generos];
+  
+    // Seleccionar dos géneros aleatorios
+    for (let i = 0; i < 2; i++) {
+      const randomIndex = Math.floor(Math.random() * generosCopy.length);
+      randomGeneros.push(generosCopy.splice(randomIndex, 1)[0]); // Extraer y remover el género seleccionado
+    }
+  
+    return randomGeneros;
   }
 }
