@@ -136,12 +136,27 @@ cargarMasEpisodios(event: any) {
   }
 
   async openVideoModal(episodio: EpisodiosResponse) {
-    const videosDisponibles = episodio.videos.filter(video => video.code);
-    if (videosDisponibles.length > 0) {
+    // Verifica si videos está en formato de cadena (string) y conviértelo en JSON
+    let videosDisponibles = [];
+    try {
+      if (typeof episodio.videos === 'string') {
+        videosDisponibles = JSON.parse(episodio.videos); // Convierte el string a array de objetos
+      } else {
+        videosDisponibles = episodio.videos; // Ya es un array
+      }
+    } catch (error) {
+      console.error('Error al convertir videos a JSON:', error);
+      return;
+    }
+  
+    // Filtra los videos que tengan el campo "code"
+    const videosConCodigo = videosDisponibles.filter(video => video.code);
+  
+    if (videosConCodigo.length > 0) {
       const modal = await this.modalCtrl.create({
         component: VideoModalPage,
         componentProps: {
-          videos: videosDisponibles
+          videos: videosConCodigo
         }
       });
       await modal.present();
