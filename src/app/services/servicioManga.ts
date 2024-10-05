@@ -1,0 +1,50 @@
+import { Injectable } from '@angular/core';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {AnimeResponse} from '../interfaces/AnimeResponse';
+import { trailer } from '../interfaces/trailer';
+import { valoresPeliculas } from '../interfaces/valoresPeliculas';
+import { reparto } from '../interfaces/reparto';
+import { busqueda } from '../interfaces/busqueda';
+import { DomSanitizer, SafeResourceUrl } from '@angular/platform-browser';
+import { series } from '../interfaces/series';
+import { serie } from '../interfaces/serie';
+import { temporada } from '../interfaces/temporada';
+import { environment } from 'src/environments/environment';
+import { peliculaTMB } from '../interfaces/peliculaTMB';
+import { AnimePerfilResponse } from '../interfaces/AnimePerfilResponse';
+import { Observable } from 'rxjs';
+import { EpisodiosResponse } from '../interfaces/EpisodiosResponse';
+import { VideoEpisodioResponse } from '../interfaces/VideoEpisodioResponse';
+import { AnimeBusqueda } from '../interfaces/AnimeBusqueda';
+import { MangaPopularResponse } from '../interfaces/MangaPopularResponse';
+import { MangaPerfilResponse } from '../interfaces/MangaPerfilResponse';
+
+
+@Injectable({
+  providedIn: 'root'
+})
+export class servicioManga {
+  
+
+  urlSafe: SafeResourceUrl;
+  url:string;
+
+  private baseUrl = 'http://127.0.0.1:8000'; 
+  //private baseUrl = 'https://jittery-fanchon-kservice-2dfbeffb.koyeb.app'
+
+  constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
+
+
+getMangaPopulares() : Observable<MangaPopularResponse[]>{
+    const path = `${this.baseUrl}/api/MangasPopulares`;
+    return this.http.get<MangaPopularResponse[]>(path);
+}
+
+getMangaPerfil(manga): Observable<MangaPerfilResponse> {
+  const path = `${this.baseUrl}/api/getMangaPerfil?manga=${manga}`;
+  return this.http.get<MangaPerfilResponse>(path);
+}
+
+
+
+}

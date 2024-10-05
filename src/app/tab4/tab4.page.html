@@ -1,0 +1,37 @@
+<ion-header>
+  <ion-toolbar class="toolbar-background">
+    <ion-title class="titulo">KING MANGA TV</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="false">
+  <div class="content-wrapper"> <!-- Div envolvente -->
+
+    <div class="heading-container">
+      <h3>Mangas Populares</h3>
+    </div>
+
+    <!-- Lista de resultados -->
+    <div class="anime-container">
+      <div *ngFor="let manga of mangasPopulares" class="anime-item">
+        <div class="anime-thumbnail">
+         <!-- <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div>  Aviso del tipo -->
+          <img class="poster-img" [src]="manga.portada" alt="{{manga.titulo}}"  [routerLink]="['/manga-perfil', manga.id]">
+          <div class="rating-container">
+            <span class="rating-text">{{manga.calificacion}}</span>
+            <i class="fa fa-star rating-star"></i>
+          </div>
+        </div>
+        
+        <div class="anime-info">
+          <h2 class="anime-title">{{ manga.titulo }}</h2>
+        </div>
+      </div>
+      
+      <div *ngIf="buscando" class="spinner-container">
+        <div class="loader"></div>
+      </div>
+    </div>
+   
+  </div>
+</ion-content>

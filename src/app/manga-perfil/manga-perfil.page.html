@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-toolbar class="toolbar-background">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="titulo">KING ANIME TV</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="false">
+  <div class="album py-3 full-screen">
+    <div class="container" *ngIf="cargarManga">
+
+      <!-- Contenedor para el manga perfil -->
+      <div *ngIf="manga" class="random-anime-container">
+
+        <!-- Contenedor de la imagen -->
+        <div class="random-anime-img-wrapper">
+          <img class="random-anime-img" [src]="manga.poster" alt="{{manga.titulo}}">
+          <i class="fas fa-heart heart" 
+            title="Añadir a favoritos" 
+            style="position: absolute; top: 15px; right: 25px; z-index: 15; font-size: 30px; ">
+          </i>
+          <div class="random-anime-info">
+            <div class="title-rating-wrapper">
+              <h4 class="random-anime-title">{{manga.titulo}}</h4>
+              <div class="random-anime-rating">
+                <span>{{manga.calificacion}}</span>
+                <i class="fa fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del manga -->
+        <div class="manga-details">
+          <h5>Descripción</h5>
+          <p>{{manga.descripcion}}</p>
+
+          <h5>Géneros</h5>
+          <p>{{manga.generos.join(', ')}}</p>
+
+         
+        </div>
+
+        <!-- Pestañas para Episodios y Animes Similares -->
+        <div class="tabs">
+          <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)">
+            <ion-segment-button value="episodes">
+              Episodios
+            </ion-segment-button>
+            <ion-segment-button value="similar">
+              Animes Similares
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+        <!-- Contenido de la pestaña seleccionada -->
+        <div [ngSwitch]="selectedTab">
+          <div *ngSwitchCase="'episodes'" class="episodes-content">
+            <!-- Aquí iría el contenido relacionado con los episodios -->
+          </div>
+
+          <div *ngSwitchCase="'similar'" class="anime-container">
+            <!-- Aquí iría el contenido relacionado con los animes similares -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="!cargarManga" class="spinner-container">
+      <div class="loader"></div>
+    </div>
+  </div>
+</ion-content>

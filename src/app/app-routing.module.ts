@@ -26,7 +26,8 @@ const routes: Routes = [
   {
     path: 'anime-perfil/:id',
     loadChildren: () => import('./anime-perfil/anime-perfil.module').then( m => m.AnimePerfilPageModule)
-  },  {
+  },
+  {
     path: 'video-modal',
     loadChildren: () => import('./video-modal/video-modal.module').then( m => m.VideoModalPageModule)
   },
@@ -38,6 +39,15 @@ const routes: Routes = [
     path: 'tab2',
     loadChildren: () => import('./tab2/tab2.module').then( m => m.Tab2PageModule)
   },
+  {
+    path: 'tab4',
+    loadChildren: () => import('./tab4/tab4.module').then( m => m.Tab4PageModule)
+  },
+  {
+    path: 'manga-perfil/:id',
+    loadChildren: () => import('./manga-perfil/manga-perfil.module').then( m => m.MangaPerfilPageModule)
+  },
+
 
 ];
 @NgModule({
