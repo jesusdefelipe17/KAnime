@@ -37,10 +37,6 @@
           <h5>Descripción</h5>
           <p>{{manga.descripcion}}</p>
 
-          <h5>Géneros</h5>
-          <p>{{manga.generos.join(', ')}}</p>
-
-         
         </div>
 
         <!-- Pestañas para Episodios y Animes Similares -->
@@ -58,7 +54,11 @@
         <!-- Contenido de la pestaña seleccionada -->
         <div [ngSwitch]="selectedTab">
           <div *ngSwitchCase="'episodes'" class="episodes-content">
-            <!-- Aquí iría el contenido relacionado con los episodios -->
+            <div *ngFor="let episodio of episodios" class="episode-item" (click)="irALeerCapitulo(episodio.chapter_id)">
+              <i class="fa fa-play-circle play-icon"></i>
+              <p class="episode-title">{{ episodio.titulo }}</p>
+              <i class="fa fa-play play-icon"></i>
+            </div>
           </div>
 
           <div *ngSwitchCase="'similar'" class="anime-container">

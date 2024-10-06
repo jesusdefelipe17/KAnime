@@ -29,8 +29,8 @@ export class servicioManga {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  private baseUrl = 'http://127.0.0.1:8000'; 
-  //private baseUrl = 'https://jittery-fanchon-kservice-2dfbeffb.koyeb.app'
+  //private baseUrl = 'http://127.0.0.1:8000'; 
+  private baseUrl = 'https://long-tammi-kservice-9c885740.koyeb.app'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
@@ -45,6 +45,10 @@ getMangaPerfil(manga): Observable<MangaPerfilResponse> {
   return this.http.get<MangaPerfilResponse>(path);
 }
 
+cargarCapitulos(url): Observable<string[]> {
+  const path = `${this.baseUrl}/api/getMangaImages?url=${url}`;
+  return this.http.get<string[]>(path);
+}
 
 
 }

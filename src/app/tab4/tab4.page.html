@@ -16,7 +16,7 @@
       <div *ngFor="let manga of mangasPopulares" class="anime-item">
         <div class="anime-thumbnail">
          <!-- <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div>  Aviso del tipo -->
-          <img class="poster-img" [src]="manga.portada" alt="{{manga.titulo}}"  [routerLink]="['/manga-perfil', manga.id]">
+          <img class="poster-img" [src]="manga.portada" alt="{{manga.titulo}}"  [routerLink]="['/manga-perfil', manga.enlace]">
           <div class="rating-container">
             <span class="rating-text">{{manga.calificacion}}</span>
             <i class="fa fa-star rating-star"></i>

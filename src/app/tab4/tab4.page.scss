@@ -49,6 +49,13 @@
   
   .anime-title{
     color: white;
+    display: -webkit-box;          /* Para la compatibilidad con navegadores */
+    -webkit-box-orient: vertical; /* Orientación vertical del box */
+    -webkit-line-clamp: 2;        /* Número de líneas a mostrar */
+    overflow: hidden;              /* Ocultar el desbordamiento */
+    text-overflow: ellipsis;      /* Mostrar "..." al final */
+    line-height: 1.2;             /* Altura de línea para control */
+    max-height: 2.4em;            /* Altura máxima para 2 líneas */
   }
   
   

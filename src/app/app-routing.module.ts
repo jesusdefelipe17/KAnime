@@ -47,6 +47,11 @@ const routes: Routes = [
     path: 'manga-perfil/:id',
     loadChildren: () => import('./manga-perfil/manga-perfil.module').then( m => m.MangaPerfilPageModule)
   },
+  {
+    path: 'read-chapter/:chapterUrl',
+    loadChildren: () => import('./read-chapter/read-chapter.module').then( m => m.ReadChapterPageModule)
+  },
+
 
 
 ];
