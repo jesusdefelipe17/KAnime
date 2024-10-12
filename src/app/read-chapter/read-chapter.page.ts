@@ -21,6 +21,7 @@ export class ReadChapterPage implements OnInit {
   chapterUrl: string;
   loading: boolean = true;
   capitulo:string[];
+  numCapitulo: string="";
   
   @ViewChild('openToast', { static: false }) openToast: any;
 
@@ -47,6 +48,7 @@ export class ReadChapterPage implements OnInit {
     this.servicioManga.cargarCapitulos(this.chapterUrl).subscribe({
       next: (capitulo) => {
         this.capitulo = capitulo;  
+        this.extraerNumeroCapitulo();
         this.loading=false;
       },
       error: (err) => {
@@ -56,5 +58,15 @@ export class ReadChapterPage implements OnInit {
     });
   }
   
+   // Método para extraer el número de capítulo desde la URL
+   extraerNumeroCapitulo() {
+    
+    let partes = this.capitulo[0].split("/")
+    
+    if (partes[5]) {
+      this.numCapitulo = partes[7];  // Almacena '01', por ejemplo
+      console.log("Número del capítulo:", this.numCapitulo);
+    }
+  }
 
 }

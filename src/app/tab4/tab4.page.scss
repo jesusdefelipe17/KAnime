@@ -40,13 +40,10 @@
   .heading-container {
     padding-left: 5%;
     padding-right: 5%;
-    padding-top: 5%;
+    padding-top: 1%;
     text-align: center;
   }
-  .py-3{
-    padding-top: 0!important;
-  }
-  
+
   .anime-title{
     color: white;
     display: -webkit-box;          /* Para la compatibilidad con navegadores */
@@ -59,26 +56,29 @@
   }
   
   
-  .full-screen {
-    min-height: 100%; /* Ocupa al menos el 100% de la altura de la pantalla */
-    display: flex;     /* Esto puede ayudarte a centrar contenido */
-    justify-content: center; /* Centra horizontalmente el contenido */
-    align-items: center;     /* Centra verticalmente el contenido */
-  }
   
 
 /* Asegúrate de que el contenedor principal también tenga el color de fondo */
 .album {
     background-color: #212121; /* Asegura que el contenedor tenga el mismo color */
+    
 }
+.py-3{
+  padding-top: 0!important;
+}
+
+
+
+.full-screen {
+  min-height: 100%; /* Ocupa al menos el 100% de la altura de la pantalla */
+
+}
+
   
 
 .content-wrapper {
-    height: 100%; /* Ocupa toda la altura de ion-content */
     padding: 0; /* Remueve el padding */
-    box-sizing: border-box; /* Asegúrate de que el padding no afecte el tamaño total */
-    background-color: #212121;
-    height: 100%;
+ 
 }
 
 .anime-container{
@@ -189,21 +189,269 @@
     color: #ffffff;
     z-index: 10; /* Asegura que esté por encima de la imagen del poster */
   }
-  
+  .rating-container2 {
+    position: absolute; /* Posiciona el contenedor absolutamente dentro del poster */
+    bottom: 10px; /* Ajusta la distancia desde el borde inferior */
+    right: 10px; /* Ajusta la distancia desde el borde derecho */
+    background: rgba(0, 0, 0, 0.82); /* Fondo oscuro con opacidad para mejor legibilidad */
+    padding: 5px 10px;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    color: #ffffff;
+    z-index: 10; /* Asegura que esté por encima de la imagen del poster */
+  }
+   /* Estrella de calificación */
+   .rating-star {
+    color: #ffd700; /* Color dorado para la estrella */
+    font-size: 1rem;
+  }
   /* Texto de calificación */
   .rating-text {
     font-size: 0.8rem;
     margin-right: 5px;
   }
-  
-  /* Estrella de calificación */
-  .rating-star {
-    color: #ffd700; /* Color dorado para la estrella */
-    font-size: 1rem;
+  .rating-text2 {
+    font-size: 0.7rem;
+    margin-right: 5px;
   }
 
-
+  .random-anime-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+  }
   
- 
+  /* Estilo para la imagen del anime aleatorio */
+  .random-anime-img-wrapper {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Imagen del anime aleatorio */
+  .random-anime-img {
+    width: 100%;
+    height: auto;
+    display: block;
+    mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 5%, #212121 100%);
+    -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 5%, #212121 100%);
+  }
+  
+  /* Aviso de "NEW" en la esquina superior izquierda */
+  .new-badge {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background-color: #ff0000; /* Color de fondo rojo para el aviso */
+    color: #ffffff; /* Texto en blanco */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 20; /* Asegura que esté encima de la imagen */
+  }
+  
+  /* Aviso del tipo en la esquina superior derecha */
+  .type-badge {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background-color: #4caf50; /* Color de fondo por defecto */
+    color: #ffffff; /* Texto en blanco */
+    padding: 5px 10px;
+    border-radius: 15px; /* Bordes redondeados */
+    font-weight: bold;
+    font-size: 0.9rem;
+    z-index: 20; /* Asegura que esté encima de la imagen */
+  }
+  
+  /* Colores específicos para cada tipo */
+  .type-emision {
+    background-color: #34db7f; /* Color para Anime */
+  }
+  
+  .type-finalizado {
+    background-color: #e62222; /* Color para Película */
+  }
+  
+  .type-ova {
+    background-color: #2ecc71; /* Color para OVA */
+  }
+  
+  /* Información del anime (título y calificación) superpuesta en la imagen */
+  .random-anime-info {
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    width: calc(100% - 20px); /* Ajusta el ancho para dar espacio */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: #ffffff;
+    z-index: 10;
+  }
+  
+  /* Contenedor para el título y la calificación */
+  .title-rating-wrapper {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  /* Título del anime alineado a la izquierda */
+  .random-anime-title {
+    font-size: 1.2rem;
+    font-weight: bold;
+    margin: 0;
+  }
+  
+  /* Calificación del anime alineada a la derecha */
+  .random-anime-rating {
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+    margin-left: auto;
+  }
+  
+  /* Icono de estrella */
+  .random-anime-rating .fa-star {
+    color: #ffc107;
+    margin-left: 5px;
+  }
+  
+  /* Descripción del anime aleatorio debajo de la imagen */
+  .random-anime-description {
+    color: #ffffff;
+    background-color: rgba(33, 33, 33, 0.8);
+    padding: 10px;
+    border-radius: 10px;
+    line-height: 1.4;
+    font-size: 1rem;
+  }
+  
+  
+  /* Estilo para el contenedor del botón */
+  .watch-button-wrapper {
+    margin-top: 10px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    padding: 5%;
+  }
+  
+  /* Estilo para el botón */
+  .watch-button {
+    width: 100%;
+    background-color: #397C33; /* Color verde */
+    color: #ffffff;
+    border: none;
+    padding: 10px 0;
+    font-size: 1rem;
+    font-weight: bold;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  /* Ícono de play dentro del botón */
+  .watch-button .play-icon {
+    margin-right: 10px;
+    font-size: 1.5rem;
+  }
+  
+  /* Hover para el botón */
+  .watch-button:hover {
+    background-color: #2d6328; /* Color más oscuro para hover */
+  }
+  
+  .heart {
+    font-size: 18px; /* Tamaño del corazón */
+    color: gray; /* Color por defecto */
+    transition: color 0.3s ease, transform 0.3s ease;
+    position: relative;
+    display: inline-block;
+  }
+  
+  .heart.filled {
+    color: #45a049; /* Color cuando está lleno */
+    animation: explode 0.3s ease forwards; /* Llama a la animación de explosión */
+  }
+  
+  @keyframes explode {
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.5);
+    }
+    100% {
+      transform: scale(1);
+    }
+  }
+  .popular-poster {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: left;
+    width: 100%;
+    max-width: 250px;
+    position: relative;
+    background: #212121;
+    border-radius: 10px;
+  }
+  
+  /* Ajustamos la altura fija para el contenedor de la imagen */
+  .poster-img-wrapper {
+    position: relative;
+    width: 100%;
+    height: 200px; /* Ajusta esta altura según tus necesidades */
+    overflow: hidden; /* Asegura que las imágenes que sean más grandes se recorten */
+  }
+  
+  .poster-img {
+    width: 100%;
+    height: 100%; /* Se asegura que la imagen ocupe todo el contenedor */
+    object-fit: cover; /* Recorta la imagen para cubrir el contenedor sin distorsionarse */
+    border-radius: 10px 10px 10px 10px;
+  }
+  
+  .poster-title {
+    margin-top: 0.5rem;
+    text-align: left;
+    color: #ffffff;
+    font-family: sans-serif;
+    font-size: 0.8rem;
+    overflow: visible;
+    text-overflow: clip;
+    white-space: normal;
+  }
+  
+  ion-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 10px; /* Aplica 10px de padding en la izquierda y derecha */
+    width: auto;
+}
 
+  .anime-card {
+    width: 100%;
+    max-width: 250px;
+    margin: 0 auto;
+  }
+  
+  .popular-slides {
+    overflow: hidden;
+  }
+  
+  .popular-slides .swiper-slide {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
   

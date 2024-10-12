@@ -27,8 +27,8 @@ export class servicioPelicula {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  //private baseUrl = 'http://127.0.0.1:8000'; 
-  private baseUrl = 'https://long-tammi-kservice-9c885740.koyeb.app'
+  private baseUrl = 'http://127.0.0.1:8000'; 
+  //private baseUrl = 'https://long-tammi-kservice-9c885740.koyeb.app'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 

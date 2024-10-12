@@ -51,8 +51,10 @@ const routes: Routes = [
     path: 'read-chapter/:chapterUrl',
     loadChildren: () => import('./read-chapter/read-chapter.module').then( m => m.ReadChapterPageModule)
   },
-
-
+  {
+    path: 'tab5',
+    loadChildren: () => import('./tab5/tab5.module').then( m => m.Tab5PageModule)
+  },
 
 ];
 @NgModule({

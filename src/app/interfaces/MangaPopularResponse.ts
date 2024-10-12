@@ -4,4 +4,6 @@ export interface MangaPopularResponse {
     enlace:string;
     portada:string;
     titulo:string;
+    fecha_registro:string;
+    capitulo:string;
 }

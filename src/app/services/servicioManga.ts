@@ -18,6 +18,7 @@ import { VideoEpisodioResponse } from '../interfaces/VideoEpisodioResponse';
 import { AnimeBusqueda } from '../interfaces/AnimeBusqueda';
 import { MangaPopularResponse } from '../interfaces/MangaPopularResponse';
 import { MangaPerfilResponse } from '../interfaces/MangaPerfilResponse';
+import { MangaBusquedaResponse } from '../interfaces/MangaBusquedaResponse';
 
 
 @Injectable({
@@ -29,8 +30,8 @@ export class servicioManga {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  //private baseUrl = 'http://127.0.0.1:8000'; 
-  private baseUrl = 'https://long-tammi-kservice-9c885740.koyeb.app'
+   private baseUrl = 'http://127.0.0.1:8000'; 
+  //private baseUrl = 'https://long-tammi-kservice-9c885740.koyeb.app'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
@@ -49,6 +50,17 @@ cargarCapitulos(url): Observable<string[]> {
   const path = `${this.baseUrl}/api/getMangaImages?url=${url}`;
   return this.http.get<string[]>(path);
 }
+
+getMangaBusqueda(manga): Observable<MangaBusquedaResponse[]> {
+  const path = `${this.baseUrl}/api/getManga?manga=${manga}`;
+  return this.http.get<MangaBusquedaResponse[]>(path);
+}
+
+getMangaUltimosCapitulos() : Observable<MangaPopularResponse[]>{
+  const path = `${this.baseUrl}/api/MangaUltimosCapitulos`;
+  return this.http.get<MangaPopularResponse[]>(path);
+}
+
 
 
 }

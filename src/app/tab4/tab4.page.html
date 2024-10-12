@@ -5,7 +5,63 @@
 </ion-header>
 
 <ion-content [fullscreen]="false">
-  <div class="content-wrapper"> <!-- Div envolvente -->
+  <div class="album py-3 full-screen"> <!-- Div envolvente -->
+    <div class="content-wrapper" *ngIf="!buscando">
+
+      <!-- Contenedor para el anime aleatorio -->
+      <div *ngIf="aleatorio" class="random-anime-container">
+        <!-- Contenedor de la imagen -->
+        <div class="random-anime-img-wrapper">
+          <div class="new-badge">NUEVO</div> <!-- Aviso de "NEW" -->
+          <div class="type-badge" [ngClass]="getTypeClass(aleatorio.tipo)">{{aleatorio.capitulo}}</div> <!-- Aviso del tipo -->
+          <img class="random-anime-img" [src]="aleatorio.portada" alt="{{aleatorio.titulo}}" (error)="errorHandler($event)">
+          <div class="random-anime-info">
+            <div class="title-rating-wrapper">
+              <h4 class="random-anime-title">{{aleatorio.titulo}}</h4>
+              <div class="random-anime-rating">
+                <span>{{aleatorio.fecha_registro}}</span>
+                <i class="fa fa-star"></i> <!-- Icono de estrella -->
+              </div>
+            </div>
+          </div>
+        </div>
+      
+         <!-- Botón para comenzar a ver -->
+        <div class="watch-button-wrapper">
+          <button class="watch-button" [routerLink]="['/read-chapter/', aleatorio.enlace]">
+            <i class="fa fa-play-circle play-icon"></i> COMENZAR A LEER
+          </button>
+        </div>
+      </div>
+
+
+
+      <div class="heading-container">
+        <h3>Últimos Capitulos</h3>
+      </div>
+      <br>
+      
+      <ion-slides [options]="popularesSlideOpts" *ngIf="ultimosCapitulosManga.length > 0" #popularesSlides class="popular-slides">
+        <ion-slide *ngFor="let item of ultimosCapitulosManga">
+          <div class="popular-poster">
+            <!-- Usamos 'item.enlace' en lugar de 'aleatorio.enlace' -->
+            <a [routerLink]="['/read-chapter/', item.enlace]">
+              <div class="poster-img-wrapper">
+                <img class="poster-img" [src]="item.portada" alt="{{item.titulo}}" (error)="errorHandler($event)">
+                <div class="rating-container2">
+                  <span class="rating-text2">{{item.capitulo}}</span>
+                </div>
+              </div>
+            </a>
+            <p class="poster-title">{{item.titulo}}</p>
+          </div>
+        </ion-slide>
+      </ion-slides>
+      
+
+
+
+
 
     <div class="heading-container">
       <h3>Mangas Populares</h3>
@@ -27,11 +83,17 @@
           <h2 class="anime-title">{{ manga.titulo }}</h2>
         </div>
       </div>
-      
-      <div *ngIf="buscando" class="spinner-container">
-        <div class="loader"></div>
-      </div>
-    </div>
-   
+   </div>
+
+
+  
+
+
+
+
+   <div *ngIf="buscando" class="spinner-container">
+    <div class="loader"></div>
+  </div>
+</div>
   </div>
 </ion-content>
