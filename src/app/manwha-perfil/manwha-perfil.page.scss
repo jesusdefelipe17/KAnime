@@ -1,0 +1,413 @@
+ion-toolbar {
+    box-shadow: none; /* Quita la sombra del toolbar */
+    border-bottom: none; /* Quita la línea del borde */
+  }
+  .titulo {
+    text-align: center;
+    color: #ffffff; /* Blanco para el texto del título */
+    font-weight: bold;
+    font-family: sans-serif; /* Fuente llamativa y divertida */
+    font-size: 1.5rem; /* Tamaño más grande para el título */
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para mejorar la visibilidad */
+  }
+  .toolbar-background {
+    --background: #282828;
+  }
+
+ /* Asegúrate de que el texto "Back" no sea visible */
+ion-back-button .button-text {
+  display: none;
+}
+
+/* Asegúrate de que el icono sea visible */
+ion-back-button .button-inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+:host ::ng-deep ion-back-button .button-text {
+  display: none;
+}
+
+
+/* Estilo para el título */
+.titulo {
+  text-align: center;
+  color: #ffffff;
+  font-weight: bold;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
+}
+
+.container {
+  padding: 0;
+}
+
+.heading-container {
+  padding-left: 5%;
+  padding-right: 5%;
+  padding-top: 5%;
+}
+.py-3{
+  padding-top: 0!important;
+}
+
+
+
+.full-screen {
+  min-height: 100%; /* Ocupa al menos el 100% de la altura de la pantalla */
+  display: flex;     /* Esto puede ayudarte a centrar contenido */
+  justify-content: center; /* Centra horizontalmente el contenido */
+  align-items: center;     /* Centra verticalmente el contenido */
+}
+
+/* Estilo para el encabezado de los episodios */
+h3 {
+  color: #45a049;
+  font-family: sans-serif;
+  font-size: 1.5rem;
+  margin-top: 1rem;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.5);
+  border-bottom: 2px solid #333333; /* Línea de separación debajo del título */
+  padding-bottom: 0.5rem; /* Espacio entre el texto y la línea */
+}
+
+/* Estilo para el fondo del contenido */
+.album {
+  background-color: #212121;
+
+}
+
+/* Estilo para el contenedor de la imagen y la calificación */
+.poster-img-wrapper {
+  position: relative; /* Necesario para el posicionamiento absoluto de la calificación */
+}
+
+/* Estilo para la imagen del poster */
+.poster-img {
+  width: 100%;
+  height: auto;
+  max-height: 250px; /* Ajusta la altura máxima si es necesario */
+  object-fit: cover; /* Asegura que la imagen cubra el contenedor sin deformarse */
+  border-radius: 10px 10px 10px 10px; /* Redondea la parte superior de la imagen */
+}
+
+/* Estilo para el título del poster */
+.poster-title {
+  margin-top: 0.5rem;
+  text-align: left; /* Centra el texto del título */
+  color: #ffffff;
+  font-family: sans-serif;
+  font-size: 0.8rem;
+  overflow: visible;
+  text-overflow: clip;
+  white-space: normal;
+}
+
+/* Contenedor de la calificación */
+.rating-container {
+  position: absolute; /* Posiciona el contenedor absolutamente dentro del poster */
+  bottom: 10px; /* Ajusta la distancia desde el borde inferior */
+  right: 10px; /* Ajusta la distancia desde el borde derecho */
+  background: rgba(0, 0, 0, 0.6); /* Fondo oscuro con opacidad para mejor legibilidad */
+  padding: 5px 10px;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  color: #ffffff;
+  z-index: 10; /* Asegura que esté por encima de la imagen del poster */
+}
+
+/* Texto de calificación */
+.rating-text {
+  font-size: 0.8rem;
+  margin-right: 5px;
+}
+
+/* Estrella de calificación */
+.rating-star {
+  color: #ffd700; /* Color dorado para la estrella */
+  font-size: 1rem;
+}
+/* Estilo para el contenedor del anime aleatorio */
+/* Estilo para el contenedor del anime aleatorio */
+.random-anime-container {
+  position: relative;
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+}
+
+/* Estilo para la imagen del anime aleatorio */
+.random-anime-img-wrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+/* Imagen del anime aleatorio */
+.random-anime-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 5%, #212121 100%);
+  -webkit-mask-image: linear-gradient(to top, rgba(0, 0, 0, 0) 5%, #212121 100%);
+}
+
+
+
+/* Información del anime (título y calificación) superpuesta en la imagen */
+.random-anime-info {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  width: calc(100% - 20px); /* Ajusta el ancho para dar espacio */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #ffffff;
+  z-index: 10;
+}
+
+/* Contenedor para el título y la calificación */
+.title-rating-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+/* Título del anime alineado a la izquierda */
+.random-anime-title {
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin: 0;
+}
+
+/* Calificación del anime alineada a la derecha */
+.random-anime-rating {
+  display: flex;
+  align-items: center;
+  font-size: 1rem;
+  margin-left: auto;
+}
+
+/* Icono de estrella */
+.random-anime-rating .fa-star {
+  color: #ffc107;
+  margin-left: 5px;
+}
+
+/* Descripción del anime aleatorio debajo de la imagen */
+.manga-details{
+  color: #ffffff;
+  background-color: rgba(33, 33, 33, 0.8);
+  padding: 10px;
+  border-radius: 10px;
+  line-height: 1.4;
+  font-size: 1rem;
+}
+
+/* Estilo para el spinner */
+.loader {
+  width: 50px;
+  padding: 8px;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: #4caf50;
+  --_m: 
+    conic-gradient(#0000 10%,#000),
+    linear-gradient(#000 0 0) content-box;
+  -webkit-mask: var(--_m);
+          mask: var(--_m);
+  -webkit-mask-composite: source-out;
+          mask-composite: subtract;
+  animation: l3 1s infinite linear;
+}
+
+@keyframes l3 {
+  to { transform: rotate(1turn); }
+}
+
+/* Estilo para el contenedor del spinner */
+.spinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+
+/* Estilos personalizados para las pestañas */
+ion-segment {
+  --color: #45a049; /* Color de texto de las pestañas activas */
+}
+
+ion-segment-button {
+  --color-checked: #45a049; /* Color de texto cuando la pestaña está seleccionada */
+  --background: transparent; /* Fondo transparente para los botones de segmento */
+}
+
+ion-segment-button[aria-checked="true"] {
+  background-color: #45a049; /* Fondo verde para la pestaña seleccionada */
+  color: #fff; /* Color del texto en la pestaña seleccionada */
+}
+
+/* Estilo para el género del anime en pastillas */
+/* Estilo para el contenedor de géneros */
+.anime-genre {
+  margin-top: 16px;
+  display: flex;
+  justify-content: center; /* Centra horizontalmente el contenido del contenedor */
+  flex-wrap: wrap; /* Permite que las pastillas se ajusten en la línea siguiente si es necesario */
+  gap: 8px; /* Espacio entre las pastillas */
+  padding-bottom: 5%;
+}
+
+/* Estilo para las pastillas de género */
+.genre-pill {
+  display: flex;
+  align-items: center; /* Centra el texto verticalmente dentro de la pastilla */
+  justify-content: center; /* Centra el texto horizontalmente dentro de la pastilla */
+  padding: 8px 16px;
+  border-radius: 20px; /* Bordes redondeados */
+  background-color: #45a049; /* Fondo verde */
+  color: #fff; /* Texto blanco */
+  font-weight: bold; /* Texto en negrita */
+  text-align: center; /* Centra el texto dentro de la pastilla */
+  min-width: 100px; /* Establece un ancho mínimo fijo para las pastillas */
+  white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+
+}
+
+.episodes-content {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 10px;
+}
+
+.episode-item {
+  display: flex;
+  align-items: center;
+  background-color: #00ffc108;
+  border-radius: 8px;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+.episode-title {
+  font-size: 16px;
+  font-weight: bold;
+  color: #ffffff; /* Verde oscuro */
+  margin: 0;
+  flex: 1;
+}
+
+.download-button {
+  color: #fff;
+  border: none;
+  padding: 8px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 14px;
+  transition: background-color 0.3s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.download-button i {
+  margin-right: 5px;
+}
+
+.download-button:hover {
+  background-color: #1b5e20; /* Verde más oscuro */
+}
+
+.play-icon{
+  padding-right: 5%;
+}
+
+
+/* styles.scss o video-player.page.scss */
+.full-screen-modal {
+  --width: 100%;
+  --height: 100%;
+  --max-width: 100%;
+  --max-height: 100%;
+  --border-radius: 0;
+}
+  
+.heart {
+  font-size: 24px; /* Tamaño del corazón */
+  color: gray; /* Color por defecto */
+  transition: color 0.3s ease, transform 0.3s ease;
+  position: relative;
+  display: inline-block;
+}
+
+.heart.filled {
+  color: #45a049; /* Color cuando está lleno */
+  animation: explode 0.3s ease forwards; /* Llama a la animación de explosión */
+}
+
+
+@keyframes explode {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.5);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+
+.anime-container{
+  display: flex; 
+  flex-wrap: wrap; 
+  justify-content: space-between; 
+  padding: 3%;
+  background-color: #212121;
+
+}
+
+.anime-item {
+  width: calc(33.33% - 20px); /* Ancho de 3 ítems por fila, menos espacio */
+  margin-bottom: 15px; /* Espacio entre filas */
+}
+
+.anime-thumbnail {
+  width: 100%; /* Ancho completo del ítem */
+  height: 180px; /* Altura fija para todas las carátulas */
+  overflow: hidden; /* Oculta cualquier parte de la imagen que exceda el contenedor */
+  border-radius: 5px; /* Bordes redondeados */
+  display: flex; /* Flexbox para centrar */
+  justify-content: center; /* Centra horizontalmente */
+  align-items: center; /* Centra verticalmente */
+  position: relative;
+}
+
+.anime-thumbnail img {
+  width: 100%; /* Asegura que la imagen llene el ancho del contenedor */
+  height: 100%; /* Asegura que la imagen llene la altura del contenedor */
+  object-fit: cover; /* Mantiene la proporción y recorta si es necesario */
+  display: block; /* Evita espacio extra en la parte inferior */
+}
+
+.anime-info {
+  text-align: center; /* Centra el texto */
+  margin-top: 5px; /* Espacio entre la imagen y el título */
+}
+
+.anime-info h2 {
+  font-size: 0.9em; /* Tamaño de texto más pequeño para el título */
+  margin: 0; /* Sin márgenes */
+}
+

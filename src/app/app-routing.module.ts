@@ -55,6 +55,11 @@ const routes: Routes = [
     path: 'tab5',
     loadChildren: () => import('./tab5/tab5.module').then( m => m.Tab5PageModule)
   },
+  {
+    path: 'manwha-perfil/:id',
+    loadChildren: () => import('./manwha-perfil/manwha-perfil.module').then( m => m.ManwhaPerfilPageModule)
+  },
+
 
 ];
 @NgModule({

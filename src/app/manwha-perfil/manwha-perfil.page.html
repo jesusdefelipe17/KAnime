@@ -1,0 +1,74 @@
+<ion-header>
+  <ion-toolbar class="toolbar-background">
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title class="titulo">KING ANIME TV</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="false">
+  <div class="album py-3 full-screen">
+    <div class="container" *ngIf="cargarManwha">
+
+      <!-- Contenedor para el manwha perfil -->
+      <div *ngIf="manwha" class="random-anime-container">
+
+        <!-- Contenedor de la imagen -->
+        <div class="random-anime-img-wrapper">
+          <img class="random-anime-img" [src]="manwha.portada" alt="{{manwha.titulo}}">
+          <i class="fas fa-heart heart" 
+            title="Añadir a favoritos" 
+            style="position: absolute; top: 15px; right: 25px; z-index: 15; font-size: 30px; ">
+          </i>
+          <div class="random-anime-info">
+            <div class="title-rating-wrapper">
+              <h4 class="random-anime-title">{{manwha.titulo}}</h4>
+              <div class="random-anime-rating">
+                <span>{{manwha.calificacion}}</span>
+                <i class="fa fa-star"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información del manwha -->
+        <div class="manga-details">
+          <p>{{manwha.descripcion}}</p>
+        </div>
+
+        <!-- Pestañas para Episodios y Animes Similares -->
+        <div class="tabs">
+          <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)">
+            <ion-segment-button value="episodes">
+              Episodios
+            </ion-segment-button>
+            <ion-segment-button value="similar">
+              Manwhas Similares
+            </ion-segment-button>
+          </ion-segment>
+        </div>
+
+        <!-- Contenido de la pestaña seleccionada -->
+        <div [ngSwitch]="selectedTab">
+          <div *ngSwitchCase="'episodes'" class="episodes-content">
+            <div *ngFor="let episodio of episodios" class="episode-item" (click)="irALeerCapitulo(episodio.chapter_id)">
+              <i class="fa fa-play-circle play-icon"></i>
+              <p class="episode-title">{{ episodio.titulo }}</p>
+              <i class="fa fa-play play-icon"></i>
+            </div>
+          </div>
+
+          <div *ngSwitchCase="'similar'" class="anime-container">
+            <!-- Aquí iría el contenido relacionado con los animes similares -->
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div *ngIf="!cargarManwha" class="spinner-container">
+      <div class="loader"></div>
+    </div>
+  </div>
+</ion-content>

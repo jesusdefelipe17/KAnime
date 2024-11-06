@@ -19,6 +19,7 @@ import { AnimeBusqueda } from '../interfaces/AnimeBusqueda';
 import { MangaPopularResponse } from '../interfaces/MangaPopularResponse';
 import { MangaPerfilResponse } from '../interfaces/MangaPerfilResponse';
 import { MangaBusquedaResponse } from '../interfaces/MangaBusquedaResponse';
+import { ManwhaPerfilResponse } from '../interfaces/ManwhaPerfilResponse';
 
 
 @Injectable({
@@ -30,8 +31,8 @@ export class servicioManga {
   urlSafe: SafeResourceUrl;
   url:string;
 
-   private baseUrl = 'http://127.0.0.1:8000'; 
-  //private baseUrl = 'https://long-tammi-kservice-9c885740.koyeb.app'
+  private baseUrl = 'http://127.0.0.1:8000'; 
+  //private baseUrl = 'https://web-production-b3a6.up.railway.app'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
@@ -41,9 +42,19 @@ getMangaPopulares() : Observable<MangaPopularResponse[]>{
     return this.http.get<MangaPopularResponse[]>(path);
 }
 
+getManwhasPopulares() : Observable<MangaPopularResponse[]>{
+  const path = `${this.baseUrl}/api/ManwhasPopulares`;
+  return this.http.get<MangaPopularResponse[]>(path);
+}
+
 getMangaPerfil(manga): Observable<MangaPerfilResponse> {
   const path = `${this.baseUrl}/api/getMangaPerfil?manga=${manga}`;
   return this.http.get<MangaPerfilResponse>(path);
+}
+
+getManwhaPerfil(manwha): Observable<ManwhaPerfilResponse> {
+  const path = `${this.baseUrl}/api/getManwhaPerfil?manwha=${manwha}`;
+  return this.http.get<ManwhaPerfilResponse>(path);
 }
 
 cargarCapitulos(url): Observable<string[]> {

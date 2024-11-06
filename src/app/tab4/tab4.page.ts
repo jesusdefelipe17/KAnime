@@ -17,6 +17,7 @@ import { Router } from '@angular/router';
 export class Tab4Page implements OnInit {
 
   mangasPopulares: MangaPopularResponse[] = [];  // Variable para almacenar los mangas populares
+  manwhasPopulares: MangaPopularResponse[] = [];
   buscando:boolean = false
 
   todos;
@@ -65,25 +66,17 @@ export class Tab4Page implements OnInit {
 
   ngOnInit() {
     this.buscando = true;
-    // Suscribiéndonos al observable de mangas populares
-    this.mangaService.getMangaPopulares().subscribe({
-      next: (response: MangaPopularResponse[]) => {
-        this.mangasPopulares = response; // Asigna los datos de la respuesta a la variable
-        this.buscando = false;
-      },
-      error: (error) => {
-        console.error('Error al obtener mangas populares:', error); // Manejar errores
-        this.buscando = false;
-      }
-    });
+   
     
      // Cargar animes populares y otros datos
      forkJoin({
       mangaPopulares: this.mangaService.getMangaPopulares(),
       ultimosCapitulosManga: this.mangaService.getMangaUltimosCapitulos(),
-  }).subscribe(async ({ mangaPopulares, ultimosCapitulosManga }) => {
+      manwhasPopulares: this.mangaService.getManwhasPopulares()
+  }).subscribe(async ({ mangaPopulares, ultimosCapitulosManga, manwhasPopulares }) => {
       this.mangasPopulares = mangaPopulares;
       this.ultimosCapitulosManga = ultimosCapitulosManga;
+      this.manwhasPopulares = manwhasPopulares;
 
       if (this.ultimosCapitulosManga.length > 0) {
           const randomIndex = Math.floor(Math.random() * this.ultimosCapitulosManga.length);
@@ -91,6 +84,7 @@ export class Tab4Page implements OnInit {
       }
 
       this.cargarPeliculasPopulares = true;
+      this.buscando = false;
   });
   }
 

@@ -59,11 +59,34 @@
       </ion-slides>
       
 
-
-
-
+      
 
     <div class="heading-container">
+      <h3>Manwhas Populares</h3>
+    </div>
+
+    <!-- Lista de resultados -->
+    <div class="anime-container">
+      <div *ngFor="let manwhas of manwhasPopulares.slice(0,63)" class="anime-item">
+        <div class="anime-thumbnail">
+         <!-- <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div>  Aviso del tipo -->
+          <img class="poster-img" [src]="manwhas.portada" alt="{{manwhas.titulo}}"  [routerLink]="['/manwha-perfil', manwhas.enlace]">
+          <div class="rating-container">
+            <span class="rating-text">{{manwhas.calificacion}}</span>
+            <i class="fa fa-star rating-star"></i>
+          </div>
+        </div>
+        
+        <div class="anime-info">
+          <h2 class="anime-title">{{ manwhas.titulo }}</h2>
+        </div>
+      </div>
+   </div>
+
+
+
+
+  <div class="heading-container">
       <h3>Mangas Populares</h3>
     </div>
 
@@ -84,6 +107,9 @@
         </div>
       </div>
    </div>
+
+
+
 
 
   
