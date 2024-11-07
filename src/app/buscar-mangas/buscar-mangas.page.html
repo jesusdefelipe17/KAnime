@@ -1,0 +1,45 @@
+
+<ion-header>
+  <ion-toolbar class="toolbar-background">
+    <ion-buttons slot="end" style="padding-top: 3%; padding-right: 3%;">
+      <ion-back-button>Cancelar</ion-back-button>
+    
+    </ion-buttons>
+    <ion-searchbar style="padding-top: 5%;" 
+      [(ngModel)]="searchQuery" 
+      (ionInput)="onSearchChange($event)" 
+      placeholder="¿Qué te gustaría leer?">
+    </ion-searchbar>
+  </ion-toolbar>
+</ion-header>
+
+
+<ion-content [fullscreen]="false">
+  <div class="content-wrapper"> <!-- Div envolvente -->
+    <!-- Barra de búsqueda -->
+   
+
+    <!-- Lista de resultados -->
+    <div class="anime-container">
+      <div *ngFor="let anime of resultadosFiltrados" class="anime-item">
+        <div class="anime-thumbnail">
+          <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div> <!-- Aviso del tipo -->
+          <img class="poster-img" [src]="anime.poster" alt="{{anime.titulo}}" [routerLink]="['/manga-perfil', anime.url]">
+          <div class="rating-container">
+            <span class="rating-text">{{anime.puntuacion}}</span>
+            <i class="fa fa-star rating-star"></i>
+          </div>
+        </div>
+        
+        <div class="anime-info">
+          <h2 class="anime-title">{{ anime.titulo }}</h2>
+        </div>
+      </div>
+      
+      <div *ngIf="buscando" class="spinner-container">
+        <div class="loader"></div>
+      </div>
+    </div>
+   
+  </div>
+</ion-content>

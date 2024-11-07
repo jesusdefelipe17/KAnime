@@ -11,11 +11,15 @@ import { usuario } from '../interfaces/usuario';
 export class TabsPage {
 
  
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {
   
     
+  }
+
+  navigateTo(tab: string) {
+    this.router.navigate([tab]);
   }
 
 }

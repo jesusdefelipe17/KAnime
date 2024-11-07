@@ -1,10 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { servicioPelicula } from '../services/servicioPelicula';
-
-import { ActivatedRoute, Router } from '@angular/router';
-import { AnimeBusqueda } from '../interfaces/AnimeBusqueda';
 import { servicioManga } from '../services/servicioManga';
 import { MangaBusquedaResponse } from '../interfaces/MangaBusquedaResponse';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-tab5',
@@ -12,56 +9,72 @@ import { MangaBusquedaResponse } from '../interfaces/MangaBusquedaResponse';
   styleUrls: ['./tab5.page.scss'],
 })
 export class Tab5Page implements OnInit {
-  buscando: boolean = false; // Estado de "Cargando..."
-  resultadosFiltrados: MangaBusquedaResponse[] = []; // Resultados filtrados por la búsqueda
-  private searchTimeout: any; // Variable para manejar el debounce
-  searchQuery: string = ''; // Para manejar la búsqueda
-  animes: MangaBusquedaResponse[] = []; // Para almacenar los resultados del servicio
-  constructor(private activatedRoute: ActivatedRoute,
-    private control: Router,
-    private mangaServicio: servicioManga ) { }
+  buscando: boolean = false;
+  manwhaList: MangaBusquedaResponse[] = [];  // Lista de Manwhas
+  mangaList: MangaBusquedaResponse[] = [];   // Lista de Mangas
+  selectedTab: string = 'manwha';  // Tab seleccionado
+  currentPage: number = 1;  // Página actual de manwhas
+  searchQuery: string = '';  // Query de búsqueda (si fuera necesario)
+  
+  constructor(
+    private router: Router,
+    private mangaServicio: servicioManga
+  ) { }
 
   ngOnInit() {
+    this.fetchManwhaList();  // Cargar la primera página de manwhas
   }
 
-
-  onSearchChange(event) {
-    this.resultadosFiltrados=[];
-    const valorBusqueda = event.target.value || ''; // Si `event.target.value` es undefined, asignar una cadena vacía
-    this.searchQuery = valorBusqueda.toLowerCase(); // Convertir a minúsculas
-
-    // Mostrar el estado de "Cargando..." inmediatamente cuando el usuario comience a escribir
-    this.buscando = true;
-
-    // Cancelar la búsqueda anterior si el usuario sigue escribiendo
-    if (this.searchTimeout) {
-      clearTimeout(this.searchTimeout);
+  // Lógica para cambiar de tab
+  onTabChange(event: any) {
+    this.selectedTab = event.detail.value;
+    if (this.selectedTab === 'manwha') {
+      this.fetchManwhaList();  // Cargar Manwhas al seleccionar 'manwha'
+    } else {
+      this.fetchMangaList();  // Cargar Mangas al seleccionar 'manga'
     }
-
-    // Establecer un temporizador para esperar 1,5 segundos antes de realizar la búsqueda
-    this.searchTimeout = setTimeout(() => {
-      // Si la búsqueda está vacía, mostrar todos los resultados
-      if (this.searchQuery.trim() === '') {
-        this.resultadosFiltrados = this.animes;
-        this.buscando = false; // Ocultar "Cargando..." si no hay búsqueda
-      } else {
-        // Llamar al servicio para buscar animes basados en la búsqueda
-        this.mangaServicio.getMangaBusqueda(this.searchQuery).subscribe({
-          next: (resultados: MangaBusquedaResponse[]) => {
-            // Actualizar los resultados filtrados con los resultados de la búsqueda
-            this.resultadosFiltrados = resultados;
-            this.buscando = false; // Ocultar "Cargando..." después de recibir la respuesta
-            
-          },
-          error: (error) => {
-            console.error('Error en la búsqueda de animes:', error);
-            this.buscando = false; // Ocultar "Cargando..." en caso de error
-          }
-        });
-      }
-    }, 1500); // Esperar 1,5 segundos antes de realizar la búsqueda
   }
 
+  // Llama al servicio para obtener los manwhas, soporta paginación
+  fetchManwhaList() {
+    this.buscando = true;
+    this.mangaServicio.getCargarManwhas(this.currentPage).subscribe({
+      next: (manwhaData: any[]) => {
+        // Si es la primera página, reemplaza los datos
+        if (this.currentPage === 1) {
+          this.manwhaList = manwhaData["manwhas"];
+        } else {
+          // Si no es la primera página, concatena los datos
+          this.manwhaList = [...this.manwhaList, ...manwhaData["manwhas"]];
+        }
+        this.buscando = false;
+      },
+      error: (error) => {
+        console.error('Error al obtener Manwhas:', error);
+        this.buscando = false;
+      }
+    });
+  }
+
+  // Llama al servicio para obtener los mangas (pendiente de implementar)
+  fetchMangaList() {
+    this.buscando = true;
+    // Implementar la lógica para obtener los mangas, si lo necesitas
+  }
+
+  // Lógica para manejar el Infinite Scroll y cargar más datos
+  cargarMasManwhas(event) {
+    this.currentPage++;  // Incrementa la página actual
+    this.fetchManwhaList();  // Carga los manwhas de la nueva página
+    event.target.complete();  // Indica que la carga ha terminado
+  }
+
+  // Función para navegar a la pantalla de búsqueda
+  navigateToSearch() {
+    this.router.navigate(['/buscar-mangas']);
+  }
+
+  // Función para obtener el estilo según el tipo de manwha
   getTypeClass(tipo: string): string {
     switch (tipo) {
       case 'En Emision':

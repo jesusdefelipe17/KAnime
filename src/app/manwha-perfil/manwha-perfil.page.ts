@@ -50,7 +50,6 @@ export class ManwhaPerfilPage implements OnInit {
   }
 
   cargarManwhaPerfil() {
-    this.cargarManwha = true;
     this.servicioManga.getManwhaPerfil(this.id).subscribe({
         next: (manwha: ManwhaPerfilResponse) => {
             this.manwha = manwha;
@@ -76,7 +75,7 @@ export class ManwhaPerfilPage implements OnInit {
     // Codificar la URL para que sea compatible con el router
     const chapterUrl = encodeURIComponent(nuevaUrl);
     // Redirigir a la nueva ruta
-    this.router.navigateByUrl(`/read-chapter/${chapterUrl}`);
+    this.router.navigateByUrl(`/read-manwha-chapter/${chapterUrl}`);
 
   }
   

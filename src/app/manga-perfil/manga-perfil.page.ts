@@ -59,7 +59,6 @@ export class MangaPerfilPage implements OnInit {
   }
 
   cargarMangaPerfil() {
-    this.cargarManga = true;
     this.servicioManga.getMangaPerfil(this.id).subscribe({
         next: (manga: MangaPerfilResponse) => {
             this.manga = manga;

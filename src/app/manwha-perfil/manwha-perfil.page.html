@@ -52,9 +52,9 @@
         <!-- Contenido de la pestaña seleccionada -->
         <div [ngSwitch]="selectedTab">
           <div *ngSwitchCase="'episodes'" class="episodes-content">
-            <div *ngFor="let episodio of episodios" class="episode-item" (click)="irALeerCapitulo(episodio.chapter_id)">
+            <div *ngFor="let episodio of manwha.capitulos" class="episode-item" (click)="irALeerCapitulo('https://zonaolympus.com/api/capitulo/'+manwha.url+'/'+episodio.chapter_id)">
               <i class="fa fa-play-circle play-icon"></i>
-              <p class="episode-title">{{ episodio.titulo }}</p>
+              <p class="episode-title">Capitulo {{ episodio.titulo }}</p>
               <i class="fa fa-play play-icon"></i>
             </div>
           </div>

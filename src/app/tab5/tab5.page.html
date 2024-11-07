@@ -1,39 +1,70 @@
 <ion-header>
   <ion-toolbar class="toolbar-background">
-    <ion-title class="titulo">Buscar Manga</ion-title>
+    <ion-title class="titulo">Explorar</ion-title>
+    
+    <!-- Botón de búsqueda a la derecha del título -->
+    <ion-buttons slot="end">
+      <ion-button (click)="navigateToSearch()">
+        <ion-icon slot="icon-only" name="search-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
   </ion-toolbar>
+
+  <!-- Tabs con solo texto para TODO EL MANWHA y TODO EL MANGA -->
+  <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)" class="custom-segment">
+    <ion-segment-button value="manwha" class="segment-button">
+      Manwhas
+    </ion-segment-button>
+    <ion-segment-button value="manga" class="segment-button">
+      Mangas
+    </ion-segment-button>
+  </ion-segment>
 </ion-header>
 
 <ion-content [fullscreen]="false">
-  <div class="content-wrapper"> <!-- Div envolvente -->
-    <!-- Barra de búsqueda -->
-    <ion-searchbar 
-      [(ngModel)]="searchQuery" 
-      (ionInput)="onSearchChange($event)" 
-      placeholder="Buscar manga...">
-    </ion-searchbar>
-
-    <!-- Lista de resultados -->
-    <div class="anime-container">
-      <div *ngFor="let anime of resultadosFiltrados" class="anime-item">
+  <div class="content-wrapper">
+    <!-- Lista de resultados basada en el tab seleccionado -->
+    <div *ngIf="selectedTab === 'manwha'" class="anime-container">
+      <div *ngFor="let item of manwhaList" class="anime-item">
+        <!-- Contenido de Manwha -->
         <div class="anime-thumbnail">
-          <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div> <!-- Aviso del tipo -->
-          <img class="poster-img" [src]="anime.poster" alt="{{anime.titulo}}" [routerLink]="['/manga-perfil', anime.url]">
+          <div class="type-badge" [ngClass]="getTypeClass(item.tipo)">{{item.tipo}}</div>
+          <img class="poster-img" [src]="item.poster" alt="{{item.titulo}}" [routerLink]="['/manwha-perfil', item.url]">
           <div class="rating-container">
-            <span class="rating-text">{{anime.puntuacion}}</span>
+            <span class="rating-text">{{item.puntuacion}}</span>
             <i class="fa fa-star rating-star"></i>
           </div>
         </div>
-        
         <div class="anime-info">
-          <h2 class="anime-title">{{ anime.titulo }}</h2>
+          <h2 class="anime-title">{{ item.titulo }}</h2>
         </div>
       </div>
-      
-      <div *ngIf="buscando" class="spinner-container">
-        <div class="loader"></div>
+      <!-- Infinite Scroll para cargar más manwhas -->
+      <ion-infinite-scroll threshold="50px" (ionInfinite)="cargarMasManwhas($event)">
+        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más manwhas...">
+        </ion-infinite-scroll-content>
+      </ion-infinite-scroll>
+    </div>
+
+    <div *ngIf="selectedTab === 'manga'" class="anime-container">
+      <div *ngFor="let item of mangaList" class="anime-item">
+        <!-- Contenido de Manga -->
+        <div class="anime-thumbnail">
+          <div class="type-badge" [ngClass]="getTypeClass(item.tipo)">{{item.tipo}}</div>
+          <img class="poster-img" [src]="item.poster" alt="{{item.titulo}}" [routerLink]="['/manga-perfil', item.url]">
+          <div class="rating-container">
+            <span class="rating-text">{{item.puntuacion}}</span>
+            <i class="fa fa-star rating-star"></i>
+          </div>
+        </div>
+        <div class="anime-info">
+          <h2 class="anime-title">{{ item.titulo }}</h2>
+        </div>
       </div>
     </div>
-   
+
+    <div *ngIf="buscando" class="spinner-container">
+      <div class="loader"></div>
+    </div>
   </div>
 </ion-content>

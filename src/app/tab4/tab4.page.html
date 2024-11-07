@@ -5,28 +5,26 @@
 </ion-header>
 
 <ion-content [fullscreen]="false">
-  <div class="album py-3 full-screen"> <!-- Div envolvente -->
-    <div class="content-wrapper" *ngIf="!buscando">
+  <div class="album py-3 full-screen">
+    <div class="content-wrapper" *ngIf="buscando">
 
-      <!-- Contenedor para el anime aleatorio -->
+      <!-- Contenido aleatorio -->
       <div *ngIf="aleatorio" class="random-anime-container">
-        <!-- Contenedor de la imagen -->
         <div class="random-anime-img-wrapper">
-          <div class="new-badge">NUEVO</div> <!-- Aviso de "NEW" -->
-          <div class="type-badge" [ngClass]="getTypeClass(aleatorio.tipo)">{{aleatorio.capitulo}}</div> <!-- Aviso del tipo -->
+          <div class="new-badge">NUEVO</div>
+          <div class="type-badge" [ngClass]="getTypeClass(aleatorio.tipo)">{{aleatorio.capitulo}}</div>
           <img class="random-anime-img" [src]="aleatorio.portada" alt="{{aleatorio.titulo}}" (error)="errorHandler($event)">
           <div class="random-anime-info">
             <div class="title-rating-wrapper">
               <h4 class="random-anime-title">{{aleatorio.titulo}}</h4>
               <div class="random-anime-rating">
                 <span>{{aleatorio.fecha_registro}}</span>
-                <i class="fa fa-star"></i> <!-- Icono de estrella -->
+                <i class="fa fa-star"></i>
               </div>
             </div>
           </div>
         </div>
       
-         <!-- Botón para comenzar a ver -->
         <div class="watch-button-wrapper">
           <button class="watch-button" [routerLink]="['/read-chapter/', aleatorio.enlace]">
             <i class="fa fa-play-circle play-icon"></i> COMENZAR A LEER
@@ -34,17 +32,16 @@
         </div>
       </div>
 
-
-
+      <!-- Títulos de capítulos recientes -->
       <div class="heading-container">
         <h3>Últimos Capitulos</h3>
       </div>
       <br>
       
+      <!-- Deslizador de capítulos populares -->
       <ion-slides [options]="popularesSlideOpts" *ngIf="ultimosCapitulosManga.length > 0" #popularesSlides class="popular-slides">
         <ion-slide *ngFor="let item of ultimosCapitulosManga">
           <div class="popular-poster">
-            <!-- Usamos 'item.enlace' en lugar de 'aleatorio.enlace' -->
             <a [routerLink]="['/read-chapter/', item.enlace]">
               <div class="poster-img-wrapper">
                 <img class="poster-img" [src]="item.portada" alt="{{item.titulo}}" (error)="errorHandler($event)">
@@ -57,69 +54,65 @@
           </div>
         </ion-slide>
       </ion-slides>
+
+      <!-- Segmento para cambiar entre Mangas y Manwhas -->
+      <ion-segment [(ngModel)]="selectedSegment" class="custom-segment">
+        <ion-segment-button value="mangas">
+          <ion-label>Mangas Populares</ion-label>
+        </ion-segment-button>
+        <ion-segment-button value="manwhas">
+          <ion-label>Manwhas Populares</ion-label>
+        </ion-segment-button>
+      </ion-segment>
       
 
-      
-
-    <div class="heading-container">
-      <h3>Manwhas Populares</h3>
-    </div>
-
-    <!-- Lista de resultados -->
-    <div class="anime-container">
-      <div *ngFor="let manwhas of manwhasPopulares.slice(0,63)" class="anime-item">
-        <div class="anime-thumbnail">
-         <!-- <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div>  Aviso del tipo -->
-          <img class="poster-img" [src]="manwhas.portada" alt="{{manwhas.titulo}}"  [routerLink]="['/manwha-perfil', manwhas.enlace]">
-          <div class="rating-container">
-            <span class="rating-text">{{manwhas.calificacion}}</span>
-            <i class="fa fa-star rating-star"></i>
+      <!-- Contenido de Mangas Populares -->
+      <div *ngIf="selectedSegment === 'mangas'">
+        <div class="heading-container">
+          <h3>Mangas Populares</h3>
+        </div>
+        <div class="anime-container">
+          <div *ngFor="let manga of mangasPopulares" class="anime-item">
+            <div class="anime-thumbnail">
+              <img class="poster-img" [src]="manga.portada" alt="{{manga.titulo}}" [routerLink]="['/manga-perfil', manga.enlace]">
+              <div class="rating-container">
+                <span class="rating-text">{{manga.calificacion}}</span>
+                <i class="fa fa-star rating-star"></i>
+              </div>
+            </div>
+            <div class="anime-info">
+              <h2 class="anime-title">{{ manga.titulo }}</h2>
+            </div>
           </div>
         </div>
-        
-        <div class="anime-info">
-          <h2 class="anime-title">{{ manwhas.titulo }}</h2>
-        </div>
       </div>
-   </div>
 
-
-
-
-  <div class="heading-container">
-      <h3>Mangas Populares</h3>
-    </div>
-
-    <!-- Lista de resultados -->
-    <div class="anime-container">
-      <div *ngFor="let manga of mangasPopulares" class="anime-item">
-        <div class="anime-thumbnail">
-         <!-- <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div>  Aviso del tipo -->
-          <img class="poster-img" [src]="manga.portada" alt="{{manga.titulo}}"  [routerLink]="['/manga-perfil', manga.enlace]">
-          <div class="rating-container">
-            <span class="rating-text">{{manga.calificacion}}</span>
-            <i class="fa fa-star rating-star"></i>
+      <!-- Contenido de Manwhas Populares -->
+      <div *ngIf="selectedSegment === 'manwhas'">
+        <div class="heading-container">
+          <h3>Manwhas Populares</h3>
+        </div>
+        <div class="anime-container">
+          <div *ngFor="let manwha of manwhasPopulares" class="anime-item">
+            <div class="anime-thumbnail">
+              <img class="poster-img" [src]="manwha.portada" alt="{{manwha.titulo}}" [routerLink]="['/manwha-perfil', manwha.enlace]">
+              <div class="rating-container">
+                <span class="rating-text">{{manwha.calificacion}}</span>
+                <i class="fa fa-star rating-star"></i>
+              </div>
+            </div>
+            <div class="anime-info">
+              <h2 class="anime-title">{{ manwha.titulo }}</h2>
+            </div>
           </div>
         </div>
-        
-        <div class="anime-info">
-          <h2 class="anime-title">{{ manga.titulo }}</h2>
-        </div>
       </div>
-   </div>
 
+    </div>
 
-
-
-
-  
-
-
-
-
-   <div *ngIf="buscando" class="spinner-container">
-    <div class="loader"></div>
-  </div>
-</div>
+    <!-- Spinner mientras se carga -->
+    <div *ngIf="!buscando" class="spinner-container">
+      <div class="loader"></div>
+    </div>
   </div>
 </ion-content>

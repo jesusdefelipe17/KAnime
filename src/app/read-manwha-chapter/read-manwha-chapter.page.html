@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+    <ion-title>Leer Capítulo {{numCapitulo}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <!-- Mostrar el spinner si aún está cargando -->
+  <div *ngIf="loading" class="spinner-container">
+    <ion-spinner></ion-spinner>
+  </div>
+
+  <!-- Contenedor para mostrar las imágenes una debajo de otra -->
+  <div *ngIf="!loading" class="chapter-container">
+    <img *ngFor="let image of capitulo" [src]="image" class="chapter-image" />
+  </div>
+</ion-content>

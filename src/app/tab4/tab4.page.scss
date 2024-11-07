@@ -152,7 +152,7 @@
     height: 100%;
     width: 100%;
     padding-top: 80%;
-    z-index: 10; /* Asegura que esté por encima de otros elementos */
+    z-index: 100; /* Asegura que esté por encima de otros elementos */
   }
   
   
@@ -454,4 +454,5 @@
     justify-content: center;
     align-items: center;
   }
+
   

@@ -20,6 +20,8 @@ import { MangaPopularResponse } from '../interfaces/MangaPopularResponse';
 import { MangaPerfilResponse } from '../interfaces/MangaPerfilResponse';
 import { MangaBusquedaResponse } from '../interfaces/MangaBusquedaResponse';
 import { ManwhaPerfilResponse } from '../interfaces/ManwhaPerfilResponse';
+import { map } from 'rxjs/operators';
+import { ManwhaExplorarResponse } from '../interfaces/ManwhaExplorarResponse';
 
 
 @Injectable({
@@ -61,6 +63,23 @@ cargarCapitulos(url): Observable<string[]> {
   const path = `${this.baseUrl}/api/getMangaImages?url=${url}`;
   return this.http.get<string[]>(path);
 }
+
+cargarCapitulosManwha(url): Observable<string[]> {
+  const path = `${this.baseUrl}/api/cargarCapitulosManwha?url=${url}`;
+  return this.http.get<any>(path).pipe(
+    map(response => response.pages) // Extrae solo las páginas del capítulo
+  );
+}
+
+getCargarManwhas(page: number): Observable<any[]> {
+  const path = `${this.baseUrl}/api/cargarManwhas?page=${page}`;
+  return this.http.get<any[]>(path).pipe(
+    map(response => response) // Extrae solo las páginas del capítulo
+  );
+  
+}
+
+
 
 getMangaBusqueda(manga): Observable<MangaBusquedaResponse[]> {
   const path = `${this.baseUrl}/api/getManga?manga=${manga}`;

@@ -6,6 +6,16 @@ export interface ManwhaPerfilResponse {
     descripcion: string;      // Descripción o sinopsis del manga
     likes:string;
     visitas:string;
+    url:string;
+    capitulos: CapitulosResponse []
+}
+
+export interface CapitulosResponse {
+    chapter_id: string; // ID del capítulo
+    titulo: string;      // Título del capítulo
+    fecha_publicacion:string;
+    equipo:string;
+
 }
 
 

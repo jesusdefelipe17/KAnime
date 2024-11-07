@@ -16,9 +16,9 @@ import { Router } from '@angular/router';
 })
 export class Tab4Page implements OnInit {
 
-  mangasPopulares: MangaPopularResponse[] = [];  // Variable para almacenar los mangas populares
-  manwhasPopulares: MangaPopularResponse[] = [];
-  buscando:boolean = false
+  mangasPopulares: MangaPopularResponse[] = [];  // Manga populares
+  manwhasPopulares: MangaPopularResponse[] = []; // Manwhas populares
+  buscando: boolean = false;
 
   todos;
   animes: AnimeResponse[] = []; 
@@ -51,9 +51,7 @@ export class Tab4Page implements OnInit {
     },
   };
   
-  
   readonly TITLE_MAX_LENGTH = 12;
-
   recienAnadidos = [];
   aleatorio: any = null;
   username : string;
@@ -61,31 +59,29 @@ export class Tab4Page implements OnInit {
   filledHearts: Set<string> = new Set(); // Para guardar los IDs de animes llenos
   @ViewChild('openToast', { static: false }) openToast: any;
   
+  selectedSegment: string = 'mangas'; // Variable para manejar el segmento seleccionado
 
-  constructor(private mangaService: servicioManga,private servioPelicula: servicioPelicula,private router: Router, private dbService: DatabaseService, private toastController: ToastController) { }
+  constructor(private mangaService: servicioManga, private servioPelicula: servicioPelicula, private router: Router, private dbService: DatabaseService, private toastController: ToastController) { }
 
   ngOnInit() {
-    this.buscando = true;
-   
-    
-     // Cargar animes populares y otros datos
-     forkJoin({
+    // Cargar animes populares y otros datos
+    forkJoin({
       mangaPopulares: this.mangaService.getMangaPopulares(),
       ultimosCapitulosManga: this.mangaService.getMangaUltimosCapitulos(),
       manwhasPopulares: this.mangaService.getManwhasPopulares()
-  }).subscribe(async ({ mangaPopulares, ultimosCapitulosManga, manwhasPopulares }) => {
+    }).subscribe(async ({ mangaPopulares, ultimosCapitulosManga, manwhasPopulares }) => {
       this.mangasPopulares = mangaPopulares;
       this.ultimosCapitulosManga = ultimosCapitulosManga;
       this.manwhasPopulares = manwhasPopulares;
 
       if (this.ultimosCapitulosManga.length > 0) {
-          const randomIndex = Math.floor(Math.random() * this.ultimosCapitulosManga.length);
-          this.aleatorio = this.ultimosCapitulosManga[randomIndex];
+        const randomIndex = Math.floor(Math.random() * this.ultimosCapitulosManga.length);
+        this.aleatorio = this.ultimosCapitulosManga[randomIndex];
       }
 
       this.cargarPeliculasPopulares = true;
-      this.buscando = false;
-  });
+      this.buscando = true;
+    });
   }
 
   truncateText(text: string): string {
@@ -95,9 +91,7 @@ export class Tab4Page implements OnInit {
     return text;
   }
 
-  
   ngAfterViewInit() {
-    // Mover el código que usa this.slides aquí
     if (this.slides) {
       this.slides.startAutoplay(); // Inicia el autoplay
     }
