@@ -9,6 +9,7 @@ import { DatabaseService } from '../services/data-base.service';
 import { CapitulosResponse, MangaPerfilResponse } from '../interfaces/MangaPerfilResponse';
 import { Router } from '@angular/router';
 import { ManwhaPerfilResponse } from '../interfaces/ManwhaPerfilResponse';
+import { EpisodiosService } from '../services/episodiosService';
 
 @Component({
   selector: 'app-manwha-perfil',
@@ -30,13 +31,14 @@ export class ManwhaPerfilPage implements OnInit {
   favoritos: { idAnime: string }[] = []; // Cambiado para que sea un arreglo de objetos
   filledHearts: Set<string> = new Set(); // Para guardar los IDs de animes llenos
   @ViewChild('openToast', { static: false }) openToast: any;
-
+  episodiosLeidos = new Set<string>();
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
     public sanitizer: DomSanitizer,
     private servicioManga: servicioManga,
+    private episodiosService: EpisodiosService
   ) { 
 
    
@@ -44,6 +46,9 @@ export class ManwhaPerfilPage implements OnInit {
 
   async ngOnInit() {
     this.id = this.activatedRoute.snapshot.paramMap.get('id');
+    this.episodiosService.episodiosLeidos$.subscribe(leidos => {
+      this.episodiosLeidos = leidos;
+    });
 
 
   this.cargarManwhaPerfil();
@@ -69,14 +74,9 @@ export class ManwhaPerfilPage implements OnInit {
     this.selectedTab = event.detail.value;
   }
 
-  irALeerCapitulo(url: string) {
-    // Concatenar la parte de la URL que necesitas
-    const nuevaUrl = url;
-    // Codificar la URL para que sea compatible con el router
-    const chapterUrl = encodeURIComponent(nuevaUrl);
-    // Redirigir a la nueva ruta
-    this.router.navigateByUrl(`/read-manwha-chapter/${chapterUrl}`);
-
+  irALeerCapitulo(url: string, titulo: string, episodioId: string) {
+    this.episodiosService.marcarComoLeido(episodioId); // Marcar como leído en el servicio
+    this.router.navigate(['/read-manwha-chapter', url, titulo]);
   }
   
 

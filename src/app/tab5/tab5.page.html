@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar class="toolbar-background">
+  <ion-toolbar class="toolbar-background" style="--border-width: 0px;">
     <ion-title class="titulo">Explorar</ion-title>
     
     <!-- Botón de búsqueda a la derecha del título -->
@@ -11,24 +11,38 @@
   </ion-toolbar>
 
   <!-- Tabs con solo texto para TODO EL MANWHA y TODO EL MANGA -->
-  <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)" class="custom-segment">
-    <ion-segment-button value="manwha" class="segment-button">
-      Manwhas
-    </ion-segment-button>
-    <ion-segment-button value="manga" class="segment-button">
-      Mangas
-    </ion-segment-button>
-  </ion-segment>
+ 
 </ion-header>
 
-<ion-content [fullscreen]="false">
+<ion-content [fullscreen]="true">
   <div class="content-wrapper">
+    <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)" class="custom-segment" mode="md">
+      <ion-segment-button value="manwha" class="segment-button">
+        Manwhas
+      </ion-segment-button>
+      <ion-segment-button value="manga" class="segment-button">
+        Mangas
+      </ion-segment-button>
+    </ion-segment>
+
+     <!-- Texto "Popular" y los iconos de ordenación -->
+     <div class="sort-container">
+      <span class="popular-text" style="font-size: 18px;">Popular</span>
+      <ion-icon 
+        class="sort-icon" 
+        [name]="ascendingOrder === 'asc' ? 'arrow-up-circle' : 'arrow-down-circle'" 
+        (click)="toggleSortOrder()" style="font-size: 30px;">
+      </ion-icon>
+    </div>
+    
+
+    
     <!-- Lista de resultados basada en el tab seleccionado -->
     <div *ngIf="selectedTab === 'manwha'" class="anime-container">
       <div *ngFor="let item of manwhaList" class="anime-item">
         <!-- Contenido de Manwha -->
         <div class="anime-thumbnail">
-          <div class="type-badge" [ngClass]="getTypeClass(item.tipo)">{{item.tipo}}</div>
+          <div class="type-badge" [ngClass]="getTypeClass(item.status)">{{item.status}}</div>
           <img class="poster-img" [src]="item.poster" alt="{{item.titulo}}" [routerLink]="['/manwha-perfil', item.url]">
           <div class="rating-container">
             <span class="rating-text">{{item.puntuacion}}</span>
@@ -40,8 +54,8 @@
         </div>
       </div>
       <!-- Infinite Scroll para cargar más manwhas -->
-      <ion-infinite-scroll threshold="50px" (ionInfinite)="cargarMasManwhas($event)">
-        <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Cargando más manwhas...">
+      <ion-infinite-scroll threshold="200px" (ionInfinite)="cargarMasManwhas($event)">
+        <ion-infinite-scroll-content>
         </ion-infinite-scroll-content>
       </ion-infinite-scroll>
     </div>

@@ -8,10 +8,20 @@
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6);
   }
   .content{
-    background-color: #282828;
+    background-color: #212121;
   }
   ion-searchbar{
     background-color: #212121;
+  }
+  
+  
+  ion-content {
+    --background: #212121; /* Fondo para el contenido */
+  }
+
+  ion-segment-button.segment-button {
+    font-size: 12px; /* Tamaño de fuente aún más pequeño en pantallas pequeñas */
+    padding: 4px 8px; /* Reducir aún más el padding */
   }
   
   .container {
@@ -49,10 +59,7 @@
     border-bottom: 2px solid #333333; /* Línea de separación debajo del título */
     padding-bottom: 0.5rem; /* Espacio entre el texto y la línea */
   }
-  
-ion-content {
-    background-color: #212121; /* Color de fondo deseado */
-}
+
 
 /* Asegúrate de que el contenedor principal también tenga el color de fondo */
 .album {
@@ -61,7 +68,7 @@ ion-content {
   
   /* Estilo para el encabezado */
   .toolbar-background {
-    --background: #282828;
+    --background: #212121;
   }
   
   /* Eliminar la línea inferior del toolbar */
@@ -88,13 +95,13 @@ ion-content {
 }
 
 .anime-item {
-    width: calc(33.33% - 20px); /* Ancho de 3 ítems por fila, menos espacio */
-    margin-bottom: 15px; /* Espacio entre filas */
+    width: calc(50% - 20px); /* Ancho de 3 ítems por fila, menos espacio */
+    margin-bottom: 30px; /* Espacio entre filas */
 }
 
 .anime-thumbnail {
     width: 100%; /* Ancho completo del ítem */
-    height: 180px; /* Altura fija para todas las carátulas */
+    height: 33vh; /* Altura fija para todas las carátulas */
     overflow: hidden; /* Oculta cualquier parte de la imagen que exceda el contenedor */
     border-radius: 5px; /* Bordes redondeados */
     display: flex; /* Flexbox para centrar */
@@ -111,13 +118,16 @@ ion-content {
 }
 
 .anime-info {
-    text-align: center; /* Centra el texto */
+    text-align: left; /* Centra el texto */
     margin-top: 5px; /* Espacio entre la imagen y el título */
 }
 
 .anime-info h2 {
     font-size: 0.9em; /* Tamaño de texto más pequeño para el título */
     margin: 0; /* Sin márgenes */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    overflow: hidden; /* Oculta cualquier texto que se desborde */
+    text-overflow: ellipsis; /* Añade los puntos suspensivos (...) al final del texto */
 }
 
 /* Estilo para el spinner */
@@ -156,9 +166,8 @@ ion-content {
   /* Estilo para la imagen del poster */
   .poster-img {
     width: 100%;
-    height: auto;
-    max-height: 250px; /* Ajusta la altura máxima si es necesario */
-    object-fit: cover; /* Asegura que la imagen cubra el contenedor sin deformarse */
+    height: 100%;
+    max-height: 500px; /* Ajusta la altura máxima si es necesario */
   }
   
   /* Estilo para el título del poster */
@@ -204,7 +213,7 @@ ion-content {
     position: absolute;
     top: 0px;
     right: 0px;
-    background-color: #cccccc; /* Color de fondo por defecto */
+    background-color: #e62222; /* Color de fondo por defecto */
     color: #ffffff; /* Texto en blanco */
     padding: 3px 7px;
     font-weight: bold;
@@ -250,5 +259,25 @@ ion-content {
         }
       }
     }
+  }
+  
+  .sort-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 15px;
+    background-color: #212121; /* Fondo oscuro para el contenedor */
+  }
+  
+  .popular-text {
+    color: #ffffff;
+    font-size: 1.2em;
+    font-weight: bold;
+  }
+  
+  .sort-icon {
+    font-size: 1.5em;
+    color: #45a049; /* Color verde para el icono */
+    cursor: pointer;
   }
   

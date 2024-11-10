@@ -8,6 +8,7 @@ import { forkJoin } from 'rxjs';
 import { servicioPelicula } from '../services/servicioPelicula';
 import { DatabaseService } from '../services/data-base.service';
 import { Router } from '@angular/router';
+import { UltimosCapitulosManwhaResponse } from '../interfaces/UltimosCapitulosManwhaResponse';
 
 @Component({
   selector: 'app-tab4',
@@ -18,6 +19,7 @@ export class Tab4Page implements OnInit {
 
   mangasPopulares: MangaPopularResponse[] = [];  // Manga populares
   manwhasPopulares: MangaPopularResponse[] = []; // Manwhas populares
+  ultimosCapitulosManwhas: UltimosCapitulosManwhaResponse[] = [];
   buscando: boolean = false;
 
   todos;
@@ -50,6 +52,17 @@ export class Tab4Page implements OnInit {
       disableOnInteraction: false
     },
   };
+
+  popularesSlideOptsManwhas = {
+    slidesPerView: 3, // Número de slides visibles
+    spaceBetween: 10, // Espacio entre los slides
+    freeMode: true, // Desactiva el modo libre de slides
+    loop: false, // Desactiva el loop
+    autoplay: {
+      delay: 3000,
+      disableOnInteraction: false
+    },
+  };
   
   readonly TITLE_MAX_LENGTH = 12;
   recienAnadidos = [];
@@ -68,11 +81,13 @@ export class Tab4Page implements OnInit {
     forkJoin({
       mangaPopulares: this.mangaService.getMangaPopulares(),
       ultimosCapitulosManga: this.mangaService.getMangaUltimosCapitulos(),
-      manwhasPopulares: this.mangaService.getManwhasPopulares()
-    }).subscribe(async ({ mangaPopulares, ultimosCapitulosManga, manwhasPopulares }) => {
+      manwhasPopulares: this.mangaService.getManwhasPopulares(),
+      ultimosCapitulosManwhas: this.mangaService.getCargarNuevosCapitulosManwha()
+    }).subscribe(async ({ mangaPopulares, ultimosCapitulosManga, manwhasPopulares, ultimosCapitulosManwhas }) => {
       this.mangasPopulares = mangaPopulares;
       this.ultimosCapitulosManga = ultimosCapitulosManga;
       this.manwhasPopulares = manwhasPopulares;
+      this.ultimosCapitulosManwhas = ultimosCapitulosManwhas['capitulos'];
 
       if (this.ultimosCapitulosManga.length > 0) {
         const randomIndex = Math.floor(Math.random() * this.ultimosCapitulosManga.length);

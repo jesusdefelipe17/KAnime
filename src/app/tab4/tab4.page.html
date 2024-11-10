@@ -34,7 +34,7 @@
 
       <!-- Títulos de capítulos recientes -->
       <div class="heading-container">
-        <h3>Últimos Capitulos</h3>
+        <h3>Últimos Capitulos Mangas</h3>
       </div>
       <br>
       
@@ -47,6 +47,28 @@
                 <img class="poster-img" [src]="item.portada" alt="{{item.titulo}}" (error)="errorHandler($event)">
                 <div class="rating-container2">
                   <span class="rating-text2">{{item.capitulo}}</span>
+                </div>
+              </div>
+            </a>
+            <p class="poster-title">{{item.titulo}}</p>
+          </div>
+        </ion-slide>
+      </ion-slides>
+
+      <div class="heading-container">
+        <h3>Últimos Capitulos Manwhas</h3>
+      </div>
+      <br>
+      
+      <!-- Deslizador de capítulos populares -->
+      <ion-slides [options]="popularesSlideOptsManwhas" class="popular-slides">
+        <ion-slide *ngFor="let item of ultimosCapitulosManwhas">
+          <div class="popular-poster">
+            <a [routerLink]="['/read-manwha-chapter/', item.enlace, item.latest_chapter.name]">
+              <div class="poster-img-wrapper">
+                <img class="poster-img" [src]="item.portada" alt="{{item.titulo}}" (error)="errorHandler($event)">
+                <div class="rating-container2">
+                  <span class="rating-text2">Capítulo {{item.latest_chapter.name}}</span>
                 </div>
               </div>
             </a>

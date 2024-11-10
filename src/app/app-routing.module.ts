@@ -60,9 +60,10 @@ const routes: Routes = [
     loadChildren: () => import('./manwha-perfil/manwha-perfil.module').then( m => m.ManwhaPerfilPageModule)
   },
   {
-    path: 'read-manwha-chapter/:chapterUrl',
+    path: 'read-manwha-chapter/:chapterUrl/:name',
     loadChildren: () => import('./read-manwha-chapter/read-manwha-chapter.module').then( m => m.ReadManwhaChapterPageModule)
-  },  {
+  },
+  {
     path: 'buscar-mangas',
     loadChildren: () => import('./buscar-mangas/buscar-mangas.module').then( m => m.BuscarMangasPageModule)
   },

@@ -22,6 +22,7 @@ import { MangaBusquedaResponse } from '../interfaces/MangaBusquedaResponse';
 import { ManwhaPerfilResponse } from '../interfaces/ManwhaPerfilResponse';
 import { map } from 'rxjs/operators';
 import { ManwhaExplorarResponse } from '../interfaces/ManwhaExplorarResponse';
+import { UltimosCapitulosManwhaResponse } from '../interfaces/UltimosCapitulosManwhaResponse';
 
 
 @Injectable({
@@ -33,8 +34,8 @@ export class servicioManga {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  //private baseUrl = 'http://127.0.0.1:8000'; 
-  private baseUrl = 'https://web-production-b3a6.up.railway.app'
+  private baseUrl = 'http://127.0.0.1:8000'; 
+  //private baseUrl = 'https://web-production-b3a6.up.railway.app'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 
@@ -59,6 +60,11 @@ getManwhaPerfil(manwha): Observable<ManwhaPerfilResponse> {
   return this.http.get<ManwhaPerfilResponse>(path);
 }
 
+getCargarNuevosCapitulosManwha(): Observable<UltimosCapitulosManwhaResponse[]> {
+  const path = `${this.baseUrl}/api/cargarNuevosCapitulosManwha`;
+  return this.http.get<UltimosCapitulosManwhaResponse[]>(path);
+}
+
 cargarCapitulos(url): Observable<string[]> {
   const path = `${this.baseUrl}/api/getMangaImages?url=${url}`;
   return this.http.get<string[]>(path);
@@ -71,8 +77,8 @@ cargarCapitulosManwha(url): Observable<string[]> {
   );
 }
 
-getCargarManwhas(page: number): Observable<any[]> {
-  const path = `${this.baseUrl}/api/cargarManwhas?page=${page}`;
+getCargarManwhas(page: number,ascendingOrder:string ): Observable<any[]> {
+  const path = `${this.baseUrl}/api/cargarManwhas?page=${page}&direction=${ascendingOrder}`;
   return this.http.get<any[]>(path).pipe(
     map(response => response) // Extrae solo las páginas del capítulo
   );

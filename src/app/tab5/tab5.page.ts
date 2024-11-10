@@ -15,7 +15,8 @@ export class Tab5Page implements OnInit {
   selectedTab: string = 'manwha';  // Tab seleccionado
   currentPage: number = 1;  // Página actual de manwhas
   searchQuery: string = '';  // Query de búsqueda (si fuera necesario)
-  
+  ascendingOrder: 'asc' | 'desc' = 'asc'; // Usamos 'asc' o 'desc'
+
   constructor(
     private router: Router,
     private mangaServicio: servicioManga
@@ -38,7 +39,7 @@ export class Tab5Page implements OnInit {
   // Llama al servicio para obtener los manwhas, soporta paginación
   fetchManwhaList() {
     this.buscando = true;
-    this.mangaServicio.getCargarManwhas(this.currentPage).subscribe({
+    this.mangaServicio.getCargarManwhas(this.currentPage,this.ascendingOrder).subscribe({
       next: (manwhaData: any[]) => {
         // Si es la primera página, reemplaza los datos
         if (this.currentPage === 1) {
@@ -77,7 +78,7 @@ export class Tab5Page implements OnInit {
   // Función para obtener el estilo según el tipo de manwha
   getTypeClass(tipo: string): string {
     switch (tipo) {
-      case 'En Emision':
+      case 'Activo':
         return 'type-emision';
       case 'Finalizado':
         return 'type-finalizado';
@@ -85,4 +86,21 @@ export class Tab5Page implements OnInit {
         return '';
     }
   }
+
+  toggleSortOrder() {
+    // Alterna entre 'asc' y 'desc'
+    this.ascendingOrder = (this.ascendingOrder === 'asc') ? 'desc' : 'asc';
+
+    // Después de cambiar el orden, llama a sortList para aplicar el orden en la lista
+    this.sortList();
+  }
+
+  sortList() {
+    if (this.selectedTab === 'manwha') {
+      this.fetchManwhaList();
+    } else if (this.selectedTab === 'manga') {
+      this.fetchManwhaList();
+    }
+  }
+  
 }

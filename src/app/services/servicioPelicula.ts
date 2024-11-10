@@ -27,8 +27,8 @@ export class servicioPelicula {
   urlSafe: SafeResourceUrl;
   url:string;
 
-  //private baseUrl = 'http://127.0.0.1:8000'; 
-  private baseUrl = 'https://web-production-b3a6.up.railway.app'
+  private baseUrl = 'http://127.0.0.1:8000'; 
+  //private baseUrl = 'https://web-production-b3a6.up.railway.app'
 
   constructor(private http:HttpClient,public sanitizer: DomSanitizer) { }
 

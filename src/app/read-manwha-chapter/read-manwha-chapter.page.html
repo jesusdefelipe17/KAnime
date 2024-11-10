@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-toolbar>
+  <ion-toolbar class="toolbar-background">
     <ion-buttons slot="start">
       <ion-back-button></ion-back-button>
     </ion-buttons>
@@ -17,4 +17,15 @@
   <div *ngIf="!loading" class="chapter-container">
     <img *ngFor="let image of capitulo" [src]="image" class="chapter-image" />
   </div>
+
+  <div class="navigation-buttons" *ngIf="!loading">
+    <ion-button class="navigation-button" *ngIf="prevChapter" (click)="goToPreviousChapter()">
+      Episodio Anterior
+    </ion-button>
+    <ion-button class="navigation-button" *ngIf="nextChapter" (click)="goToNextChapter()">
+      Siguiente Episodio
+    </ion-button>
+  </div>
+  
+  
 </ion-content>
