@@ -17,8 +17,10 @@
         <!-- Contenedor de la imagen -->
         <div class="random-anime-img-wrapper">
           <img class="random-anime-img" [src]="manwha.portada" alt="{{manwha.titulo}}">
-          <i class="fas fa-heart heart" 
+          <i class="fas fa-heart heart"
+            [class.filled]="isFavorito(manwha)" 
             title="Añadir a favoritos" 
+            (click)="guardarAnime(manwha)"
             style="position: absolute; top: 15px; right: 25px; z-index: 15; font-size: 30px; ">
           </i>
           <div class="random-anime-info">

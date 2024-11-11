@@ -3,6 +3,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { servicioManga } from '../services/servicioManga';
 import { Router } from '@angular/router';
+import { EpisodiosService } from '../services/episodiosService';
 @Component({
   selector: 'app-read-manwha-chapter',
   templateUrl: './read-manwha-chapter.page.html',
@@ -26,6 +27,7 @@ export class ReadManwhaChapterPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     public sanitizer: DomSanitizer,
     private servicioManga: servicioManga,
+    private episodiosService: EpisodiosService
   ) { 
 
    
@@ -59,6 +61,7 @@ export class ReadManwhaChapterPage implements OnInit {
   goToPreviousChapter() {
     if (this.prevChapter) {
       // Reemplaza el último número en la URL con `this.prevChapter.id`
+      this.episodiosService.marcarComoLeido(this.prevChapter.id);
       const prevChapterUrl = this.chapterUrl.replace(/\/\d+$/, `/${this.prevChapter.id}`);
       this.router.navigateByUrl(`/read-manwha-chapter/${encodeURIComponent(prevChapterUrl)}/${this.prevChapter['name']}`, { replaceUrl: true });
     }
@@ -67,6 +70,7 @@ export class ReadManwhaChapterPage implements OnInit {
   goToNextChapter() {
     if (this.nextChapter) {
       // Reemplaza el último número en la URL con `this.nextChapter.id`
+      this.episodiosService.marcarComoLeido(this.nextChapter.id.toString());
       const nextChapterUrl = this.chapterUrl.replace(/\/\d+$/, `/${this.nextChapter.id}`);
       this.router.navigateByUrl(`/read-manwha-chapter/${encodeURIComponent(nextChapterUrl)}/${this.nextChapter['name']}`, { replaceUrl: true });
     }

@@ -132,4 +132,25 @@ export class Tab4Page implements OnInit {
     this.router.navigate(['/anime-perfil', id]);
   }
 
+
+  
+  verAnime(item: any) {
+    // Lógica para ver el anime del item seleccionado
+    console.log('Ver Anime:', item);
+  }
+
+  
+  verManwha(item: any) {
+    const enlace = item.enlace;
+    const partes = enlace.split('capitulo/')[1].split('/');
+    const idCapitulo = partes[0];
+    this.router.navigate(['/manwha-perfil', "https://zonaolympus.com/series/comic-"+idCapitulo]);
+    
+  }
+
+  agregarALista(item: any) {
+    // Lógica para agregar el item a la lista
+    console.log('Agregar a tu lista:', item);
+  }
+
 }

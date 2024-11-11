@@ -10,6 +10,7 @@ import { CapitulosResponse, MangaPerfilResponse } from '../interfaces/MangaPerfi
 import { Router } from '@angular/router';
 import { ManwhaPerfilResponse } from '../interfaces/ManwhaPerfilResponse';
 import { EpisodiosService } from '../services/episodiosService';
+import { servicioPelicula } from '../services/servicioPelicula';
 
 @Component({
   selector: 'app-manwha-perfil',
@@ -38,7 +39,10 @@ export class ManwhaPerfilPage implements OnInit {
     private activatedRoute: ActivatedRoute,
     public sanitizer: DomSanitizer,
     private servicioManga: servicioManga,
-    private episodiosService: EpisodiosService
+    private episodiosService: EpisodiosService,
+    private toastController: ToastController,
+    private servicioAnime: servicioPelicula,
+    private dbService: DatabaseService
   ) { 
 
    
@@ -49,7 +53,10 @@ export class ManwhaPerfilPage implements OnInit {
     this.episodiosService.episodiosLeidos$.subscribe(leidos => {
       this.episodiosLeidos = leidos;
     });
-
+    this.dbService.favoritos$.subscribe(favoritos => {
+      this.favoritos = favoritos; // Actualiza la lista de favoritos
+  });
+    this.username = await this.dbService.getUser();
 
   this.cargarManwhaPerfil();
   }
@@ -77,6 +84,39 @@ export class ManwhaPerfilPage implements OnInit {
   irALeerCapitulo(url: string, titulo: string, episodioId: string) {
     this.episodiosService.marcarComoLeido(episodioId); // Marcar como leído en el servicio
     this.router.navigate(['/read-manwha-chapter', url, titulo]);
+  }
+
+
+  isFavorito(manwha: any): boolean {
+    return this.favoritos.some(fav => fav.idAnime === 'https://zonaolympus.com/series/comic-'+manwha['url']);
+  }
+  
+  async guardarAnime(manwha: any) {
+    if (!this.isFavorito(manwha)) {
+      const datosAnime = await this.servicioManga.getManwhaPerfil('https://zonaolympus.com/series/comic-'+manwha['url']).toPromise();
+      
+      if (this.username) {
+        await this.dbService.addAnime(this.username, 'https://zonaolympus.com/series/comic-'+manwha['url'] , datosAnime.titulo, datosAnime.calificacion, datosAnime.portada, true);
+        
+        this.presentToast('bottom','Añadido a favoritos','success');
+        
+        this.favoritos.push({ idAnime: manwha });
+        this.filledHearts.add(manwha);
+      }
+    } else {
+      this.presentToast('bottom','Ya está en favoritos','danger');
+    }
+  }
+
+  async presentToast(position: 'top' | 'middle' | 'bottom',message:string,color:string) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: position,
+      color: color
+    });
+
+    await toast.present();
   }
   
 

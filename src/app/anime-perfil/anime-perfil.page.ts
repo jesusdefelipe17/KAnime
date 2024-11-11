@@ -185,7 +185,7 @@ cargarMasEpisodios(event: any) {
       const datosAnime = await this.servicioAnime.getAnimePerfil(idAnime).toPromise();
       
       if (this.username) {
-        await this.dbService.addAnime(this.username, idAnime, datosAnime.titulo, datosAnime.calificacion, datosAnime.poster);
+        await this.dbService.addAnime(this.username, idAnime, datosAnime.titulo, datosAnime.calificacion, datosAnime.poster, false);
         
         this.presentToast('bottom','Añadido a favoritos','success');
         

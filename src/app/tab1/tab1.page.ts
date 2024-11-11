@@ -135,7 +135,7 @@ export class Tab1Page implements OnInit, AfterViewInit {
         this.addAnime = datosAnime;
 
         if (this.username) {
-          await this.dbService.addAnime(this.username, idAnime, this.addAnime.titulo, this.addAnime.calificacion, this.addAnime.poster);
+          await this.dbService.addAnime(this.username, idAnime, this.addAnime.titulo, this.addAnime.calificacion, this.addAnime.poster,false);
           
            // Muestra el toast
         

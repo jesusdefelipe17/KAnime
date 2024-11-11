@@ -59,14 +59,17 @@ getAnimeBusqueda(anime: string): Observable<AnimeBusqueda[]> {
 }
 
 getAnimesByGenre(generos: string[]): Observable<AnimeResponse[]> {
+  // Filtrar géneros para eliminar aquellos que son undefined o están vacíos
+  generos = this.obtenerDosGenerosAleatorios(generos).filter(genero => genero !== undefined && genero.trim() !== '');
+
   // Construir la URL añadiendo múltiples parámetros 'genre' en función del array de géneros
-  generos = this.obtenerDosGenerosAleatorios(generos);
   const params = generos.map(genero => `genre=${encodeURIComponent(genero.toLowerCase())}`).join('&');
   const path = `${this.baseUrl}/api/getAnimesByGenre?${params}`;
   
-  // Realizar la solicitud HTTP con los géneros aleatorios
+  // Realizar la solicitud HTTP con los géneros filtrados y aleatorios
   return this.http.get<AnimeResponse[]>(path);
 }
+
 
 
 

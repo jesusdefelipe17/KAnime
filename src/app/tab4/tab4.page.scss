@@ -47,12 +47,12 @@
   .anime-title{
     color: white;
     display: -webkit-box;          /* Para la compatibilidad con navegadores */
-    -webkit-box-orient: vertical; /* Orientación vertical del box */
-    -webkit-line-clamp: 2;        /* Número de líneas a mostrar */
-    overflow: hidden;              /* Ocultar el desbordamiento */
-    text-overflow: ellipsis;      /* Mostrar "..." al final */
     line-height: 1.2;             /* Altura de línea para control */
     max-height: 2.4em;            /* Altura máxima para 2 líneas */
+    white-space: nowrap; /* Evita que el texto se divida en varias líneas */
+    overflow: hidden; /* Oculta cualquier texto que se desborde */
+    text-overflow: ellipsis; /* Añade los puntos suspensivos (...) al final del texto */
+    text-align: left;
   }
   
   
@@ -397,7 +397,6 @@
     text-align: left;
     display: flex;
     flex-direction: column;
-    align-items: left;
     width: 100%;
     max-width: 250px;
     position: relative;
@@ -405,48 +404,53 @@
     border-radius: 10px;
   }
   
-  /* Ajustamos la altura fija para el contenedor de la imagen */
   .poster-img-wrapper {
     position: relative;
     width: 100%;
-    height: 200px; /* Ajusta esta altura según tus necesidades */
-    overflow: hidden; /* Asegura que las imágenes que sean más grandes se recorten */
+    height: 200px;
+    overflow: hidden;
+    border-radius: 10px;
   }
   
+  /* Estilo para la imagen del póster */
   .poster-img {
     width: 100%;
-    height: 100%; /* Se asegura que la imagen ocupe todo el contenedor */
-    object-fit: cover; /* Recorta la imagen para cubrir el contenedor sin distorsionarse */
-    border-radius: 10px 10px 10px 10px;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
   }
   
+  /* Ícono de ojo en la esquina superior derecha */
+  .view-icon {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 1.4rem;
+
+    background-color: white;
+    border-radius: 50%;
+    padding: 4px;
+    color: #397C33;
+  }
+  
+  /* Título del póster */
   .poster-title {
     margin-top: 0.5rem;
     text-align: left;
     color: #ffffff;
     font-family: sans-serif;
     font-size: 0.8rem;
-    overflow: visible;
-    text-overflow: clip;
-    white-space: normal;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
   
   ion-slide {
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 0 10px; /* Aplica 10px de padding en la izquierda y derecha */
+    padding: 0 10px;
     width: auto;
-}
-
-  .anime-card {
-    width: 100%;
-    max-width: 250px;
-    margin: 0 auto;
-  }
-  
-  .popular-slides {
-    overflow: hidden;
   }
   
   .popular-slides .swiper-slide {
@@ -454,5 +458,4 @@
     justify-content: center;
     align-items: center;
   }
-
   

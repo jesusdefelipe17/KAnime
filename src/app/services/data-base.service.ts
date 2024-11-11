@@ -35,7 +35,18 @@ export class DatabaseService {
 
     
       // Método para agregar un anime a la base de datos
-      async addAnime(username: string, idAnime: string, title: string, rating: string, poster: string) {
+      async addAnime(username: string, idAnime: string, title: string, rating: string, poster: string, isManwha:boolean) {
+        const animes = await this.storage.get('animes') || [];
+        animes.push({ username, idAnime, title, rating, poster, isManwha });
+        await this.storage.set('animes', animes);
+        this.animesSubject.next(animes); // Actualizar el BehaviorSubject
+
+        // Actualiza la lista de favoritos
+        const favoritos = await this.getUserAnimes(username);
+        this.favoritosSubject.next(favoritos); // Notificar sobre cambios en favoritos
+      }
+
+      async addManwha(username: string, idAnime: string, title: string, rating: string, poster: string) {
         const animes = await this.storage.get('animes') || [];
         animes.push({ username, idAnime, title, rating, poster });
         await this.storage.set('animes', animes);
