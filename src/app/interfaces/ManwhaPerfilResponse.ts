@@ -7,6 +7,7 @@ export interface ManwhaPerfilResponse {
     likes:string;
     visitas:string;
     url:string;
+    genero:string;
     capitulos: CapitulosResponse []
 }
 

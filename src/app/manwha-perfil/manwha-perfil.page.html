@@ -62,7 +62,19 @@
           </div>
 
           <div *ngSwitchCase="'similar'" class="anime-container">
-            <!-- Aquí iría el contenido relacionado con los animes similares -->
+            <div *ngFor="let similar of manwhasFiltrados" class="anime-item">
+              <div class="anime-thumbnail">
+                <img class="poster-img" [src]="similar.poster" alt="{{similar.titulo}}" [routerLink]="['/manwha-perfil', similar.url]">
+                <div class="rating-container">
+                  <span class="rating-text">{{similar.chapter_count}}</span>
+                  <i class="fa fa-star rating-star"></i>
+                </div>
+              </div>
+              
+              <div class="anime-info">
+                <h2 class="anime-title">{{ similar.titulo }}</h2>
+              </div>
+            </div>
           </div>
         </div>
 

@@ -11,6 +11,7 @@ import { Router } from '@angular/router';
 import { ManwhaPerfilResponse } from '../interfaces/ManwhaPerfilResponse';
 import { EpisodiosService } from '../services/episodiosService';
 import { servicioPelicula } from '../services/servicioPelicula';
+import { ManwhaExplorarResponse, Manwhas } from '../interfaces/ManwhaExplorarResponse';
 
 @Component({
   selector: 'app-manwha-perfil',
@@ -23,6 +24,7 @@ export class ManwhaPerfilPage implements OnInit {
   id: string;
   cargarManwha: boolean = false;
   manwha: ManwhaPerfilResponse;
+  manwhasFiltrados: Manwhas[] = [];;
   selectedTab: string = 'episodes'; // Pestaña por defecto
   paginaActual: number = 0; // Mantiene el número de la página actual para la paginación
   cargandoMasEpisodios: boolean = false; // Indica si se están cargando más episodios
@@ -66,14 +68,41 @@ export class ManwhaPerfilPage implements OnInit {
         next: (manwha: ManwhaPerfilResponse) => {
             this.manwha = manwha;
 
-            this.cargarManwha = true;
+            // Mapeo de géneros de texto a su valor numérico
+            const genreMapping: { [key: string]: number } = {
+                'Accion': 1,
+                'Misterio': 20,
+                'Supernatural': 56,
+                'Vidaescolar': 38,
+                'Reencarnacion': 25,
+                'Demonios': 44,
+                'Shonen': 28,
+                'Artesmarciales': 4,
+                'Magia': 19
+            };
+
+            // Convertir this.manwha.genero a su valor numérico
+            const generoId = genreMapping[this.manwha.genero] || 0; // 0 en caso de no encontrar el género
+
+            // Llamada a getCargarManwhasFiltrados con el género convertido
+            this.servicioManga.getCargarManwhasFiltrados(generoId, 1).subscribe({
+                next: (manwhasFiltrados) => {
+                    this.manwhasFiltrados = manwhasFiltrados;  // Asignar resultados a una variable de la clase
+                    this.cargarManwha = true;
+                },
+                error: (err) => {
+                    console.error('Error al cargar los manwhas filtrados:', err);
+                    this.cargarManwha = false;
+                }
+            });
         },
         error: (err) => {
-            console.error('Error al cargar el manga:', err); // Manejo del error
+            console.error('Error al cargar el perfil del manga:', err);
             this.cargarManwha = false;
         }
     });
 }
+
   
                                
 
