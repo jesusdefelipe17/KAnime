@@ -24,7 +24,7 @@
       <div *ngFor="let anime of resultadosFiltrados" class="anime-item">
         <div class="anime-thumbnail">
           <div class="type-badge" [ngClass]="getTypeClass(anime.tipo )">{{anime.tipo }}</div> <!-- Aviso del tipo -->
-          <img class="poster-img" [src]="anime.poster" alt="{{anime.titulo}}" [routerLink]="['/manga-perfil', anime.url]">
+          <img class="poster-img" [src]="anime.poster" alt="{{anime.titulo}}" [routerLink]="getRouterLink(anime)"  loading="lazy">
           <div class="rating-container">
             <span class="rating-text">{{anime.puntuacion}}</span>
             <i class="fa fa-star rating-star"></i>

@@ -85,10 +85,22 @@ getCargarManwhas(page: number,ascendingOrder:string ): Observable<any[]> {
   
 }
 
+getCargarManwhasFiltrados(genero: number,pagina:number): Observable<any[]> {
+  const path = `${this.baseUrl}/api/getManhwasPorGeneros?generos=${genero}&pagina=${pagina}`;
+  return this.http.get<any[]>(path).pipe(
+    map(response => response) // Extrae solo las páginas del capítulo
+  );
+  
+}
+
 
 
 getMangaBusqueda(manga): Observable<MangaBusquedaResponse[]> {
   const path = `${this.baseUrl}/api/getManga?manga=${manga}`;
+  return this.http.get<MangaBusquedaResponse[]>(path);
+}
+getManwhaBusqueda(manga): Observable<MangaBusquedaResponse[]> {
+  const path = `${this.baseUrl}/api/getManwhaBusqueda?nombre=${manga}`;
   return this.http.get<MangaBusquedaResponse[]>(path);
 }
 

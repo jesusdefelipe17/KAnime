@@ -1,6 +1,6 @@
 <ion-header>
   <ion-toolbar class="toolbar-background" style="--border-width: 0px;">
-    <ion-title class="titulo">Explorar</ion-title>
+    <ion-title class="titulo" style="color: #4caf50;">Explorar</ion-title>
     
     <!-- Botón de búsqueda a la derecha del título -->
     <ion-buttons slot="end">
@@ -16,26 +16,68 @@
 
 <ion-content [fullscreen]="true">
   <div class="content-wrapper">
-    <ion-segment [(ngModel)]="selectedTab" (ionChange)="onTabChange($event)" class="custom-segment" mode="md">
-      <ion-segment-button value="manwha" class="segment-button">
-        Manwhas
-      </ion-segment-button>
-      <ion-segment-button value="manga" class="segment-button">
-        Mangas
-      </ion-segment-button>
-    </ion-segment>
-
      <!-- Texto "Popular" y los iconos de ordenación -->
      <div class="sort-container">
-      <span class="popular-text" style="font-size: 18px;">Popular</span>
-      <ion-icon 
-        class="sort-icon" 
-        [name]="ascendingOrder === 'asc' ? 'arrow-up-circle' : 'arrow-down-circle'" 
-        (click)="toggleSortOrder()" style="font-size: 30px;">
-      </ion-icon>
+      <span class="popular-text">Popular</span>
+      <div class="sort-icons">
+        <ion-icon 
+          class="sort-icon" 
+          [name]="ascendingOrder === 'asc' ? 'arrow-up-circle' : 'arrow-down-circle'" 
+          (click)="toggleSortOrder()" style="font-size: 30px;">
+        </ion-icon>
+        <ion-icon 
+          name="options-outline" 
+          (click)="toggleFilterPanel()" 
+          style="font-size: 30px;">
+        </ion-icon>
+      </div>
     </div>
     
-
+    <!-- Panel emergente de filtros -->
+    <div *ngIf="filterPanelOpen" class="filter-panel">
+      <div class="filter-header">
+        <span class="close-icon" (click)="closeFilterPanel()">X</span>
+      </div>
+      <div class="filter-options">
+        <!-- Radio button para "Todos" -->
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="0"> Todos
+        </label>
+        <!-- Radio button para "Acción" -->
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="1"> Acción
+        </label>
+        <!-- Radio button para "Misterio" -->
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="20"> Misterio
+        </label>
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="56"> Supernatural
+        </label>
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="38"> Vida escolar
+        </label>
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="25"> Reencarnacion
+        </label>
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="44"> Demonios
+        </label>
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="28"> Shonen
+        </label>
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="4"> Artes marciales
+        </label>
+        <label>
+          <input type="radio" name="genero" [(ngModel)]="selectedGenero" [value]="19"> Magia
+        </label>
+      </div>
+      <button class="apply-filters" (click)="applyFilters()">Aplicar filtros</button>
+    </div>
+    
+    
+    
     
     <!-- Lista de resultados basada en el tab seleccionado -->
     <div *ngIf="selectedTab === 'manwha'" class="anime-container">
@@ -45,8 +87,8 @@
           <div class="type-badge" [ngClass]="getTypeClass(item.status)">{{item.status}}</div>
           <img class="poster-img" [src]="item.poster" alt="{{item.titulo}}" [routerLink]="['/manwha-perfil', item.url]">
           <div class="rating-container">
-            <span class="rating-text">{{item.puntuacion}}</span>
-            <i class="fa fa-star rating-star"></i>
+            <span class="rating-text">{{item.capitulos}} Capítulos</span>
+            
           </div>
         </div>
         <div class="anime-info">

@@ -7,4 +7,5 @@ export interface MangaBusquedaResponse {
     url: string;          // Enlace a la página del anime en AnimeFLV
     id:string;
     status:string;
+    capitulos:string;
   }
