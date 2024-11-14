@@ -125,7 +125,7 @@ export class ManwhaPerfilPage implements OnInit {
       const datosAnime = await this.servicioManga.getManwhaPerfil('https://zonaolympus.com/series/comic-'+manwha['url']).toPromise();
       
       if (this.username) {
-        await this.dbService.addAnime(this.username, 'https://zonaolympus.com/series/comic-'+manwha['url'] , datosAnime.titulo, datosAnime.calificacion, datosAnime.portada, true);
+        await this.dbService.addAnime(this.username, 'https://zonaolympus.com/series/comic-'+manwha['url'] , datosAnime.titulo, datosAnime.capitulos.length.toString(), datosAnime.portada, true);
         
         this.presentToast('bottom','Añadido a favoritos','success');
         

@@ -10,8 +10,9 @@ ion-toolbar {
     font-size: 1.5rem; /* Tamaño más grande para el título */
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Sombra para mejorar la visibilidad */
   }
+
   .toolbar-background {
-    --background: #282828;
+    --background: #212121;
   }
 
  /* Asegúrate de que el texto "Back" no sea visible */

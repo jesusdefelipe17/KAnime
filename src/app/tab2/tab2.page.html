@@ -1,10 +1,10 @@
 <ion-header>
-  <ion-toolbar class="toolbar-background">
-    <ion-title class="titulo">Perfil</ion-title>
+  <ion-toolbar class="toolbar-background" style="--border-width: 0px;">
+    <ion-title class="titulo" style="color: #4caf50;">Perfil</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="false" style="--ion-content-background: #212121;"> 
+<ion-content [fullscreen]="true"> 
   <ion-list lines="none" *ngIf="animes.length > 0" style="--ion-item-background: #212121;">
     <ion-item-sliding #slidingItem *ngFor="let anime of animes; let i = index" style="margin-bottom: 16px; background-color: #212121;">
       <ng-container *ngIf="!anime.isManwha; else isManwhaContent">
@@ -31,9 +31,8 @@
           </ion-thumbnail>
           <ion-label style="flex: 1; display: flex; flex-direction: column;">
             <h2 style="color: white; white-space: normal; overflow-wrap: break-word;">{{ anime.title }}</h2>
-            <p style="color: white; margin-top: auto; display: flex; align-items: center; padding-top: 10%;">
-              Calificación: {{ anime.rating }}
-              <i class="fa fa-star rating-star" style="margin-left: 4px;"></i>
+            <p  style="color: white; margin-top: auto; display: flex; align-items: center; padding-top: 10%;">
+              Captulos: {{ anime.rating }}
             </p>
           </ion-label>
         </ion-item>
